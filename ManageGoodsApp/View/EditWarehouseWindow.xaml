@@ -1,0 +1,39 @@
+﻿<Window x:Class="ManageGoodsApp.View.EditWarehouseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManageGoodsApp.View"
+        mc:Ignorable="d"
+        Title="Редактирование склада" Height="280" Width="300"
+        ResizeMode="NoResize" Name="EditWarehouseWnd">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#FFE1E7FF">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label FontSize="16" Content="Редактирование склада"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="1" Width="200" Orientation="Vertical"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Название"/>
+            <TextBox Text="{Binding WarehouseName}"/>
+            <TextBlock Text="Адрес"/>
+            <TextBox Text="{Binding WarehouseAddress}"/>
+            <TextBlock Text="Телефон"/>
+            <TextBox PreviewTextInput="PreviewTextInput"
+                     Text="{Binding WarehousePhone}"/>
+        </StackPanel>
+        <Border Grid.Row="2" Background="#FF6D6D6D">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Padding="20 0" Height="35" Content="Изменить"
+                        Command="{Binding EditItem}"
+                        CommandParameter="{Binding ElementName=EditWarehouseWnd}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

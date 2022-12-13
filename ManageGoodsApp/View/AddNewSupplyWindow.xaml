@@ -1,0 +1,47 @@
+﻿<Window x:Class="ManageGoodsApp.View.AddNewSupplyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManageGoodsApp.View"
+        mc:Ignorable="d"
+        Title="Новая поставка" Height="300" Width="300"
+        ResizeMode="NoResize" Name="AddNewSupplyWnd">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#FFE1E7FF">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label FontSize="16" Content="Новая поставка"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="1" Width="200" Orientation="Vertical"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Товар"/>
+            <ComboBox ItemsSource="{Binding AllProducts}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SupplyProduct}"/>
+            <TextBlock Text="Количество"/>
+            <TextBox Name="DescriptionProductsBlock" PreviewTextInput="PreviewTextInput"
+                     Text="{Binding SupplyCount}"/>
+            <TextBlock Text="Поставщик"/>
+            <ComboBox ItemsSource="{Binding AllSuppliers}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SupplySupplier}"/>
+            <TextBlock Text="Склад"/>
+            <ComboBox ItemsSource="{Binding AllWarehouses}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SupplyWarehouse}"/>
+        </StackPanel>
+        <Border Grid.Row="2" Background="#FF6D6D6D">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Padding="20 0" Height="35" Content="Добавить"
+                        Command="{Binding AddItem}"
+                        CommandParameter="{Binding ElementName=AddNewSupplyWnd}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

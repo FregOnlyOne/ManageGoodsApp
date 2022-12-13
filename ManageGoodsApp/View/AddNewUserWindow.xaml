@@ -1,0 +1,69 @@
+﻿<Window x:Class="ManageGoodsApp.View.AddNewUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManageGoodsApp.View"
+        mc:Ignorable="d"
+        Title="Добавление сотрудника" Height="350" Width="500"
+        ResizeMode="NoResize" Name="AddNewUserWnd">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE1E7FF">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label FontSize="16" Content="Добавление сотрудника"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Имя"/>
+            <TextBox Name="NameBlock"
+                     Text="{Binding UserName}"/>
+            <TextBlock Text="Фамилия"/>
+            <TextBox Name="SurnameBlock"
+                     Text="{Binding UserSurname}"/>
+            <TextBlock Text="Отчество"/>
+            <TextBox Name="PatronymicBlock"
+                     Text="{Binding UserPatronymic}"/>
+            <TextBlock Text="Электронная почта"/>
+            <TextBox Name="EmailBlock"
+                     Text="{Binding UserEmail}"/>
+            <TextBlock Text="Телефон"/>
+            <TextBox Name="PhoneBlock" PreviewTextInput="PreviewTextInput"
+                     Text="{Binding UserPhone}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1"  Width="200" Orientation="Vertical"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Логин"/>
+            <TextBox Name="LoginBlock"
+                     Text="{Binding UserLogin}"/>
+            <TextBlock Text="Пароль"/>
+            <PasswordBox Name="PasswordBlock"
+                         PasswordChanged="PasswordBox_PasswordChanged"/>
+            <TextBlock Text="Должность"/>
+            <ComboBox ItemsSource="{Binding AllRoles}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding UserRole}"/>
+            <TextBlock Text="Склад"/>
+            <ComboBox ItemsSource="{Binding AllWarehouses}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding UserWarehouse}"/>
+            <Separator Height="22" Opacity="0"/>
+        </StackPanel>
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#FF6D6D6D">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Padding="20 0" Height="35" Content="Добавить"
+                        Command="{Binding AddItem}"
+                        CommandParameter="{Binding ElementName=AddNewUserWnd}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
