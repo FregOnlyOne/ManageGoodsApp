@@ -16,8 +16,10 @@ namespace ManageGoodsApp.View
             DataContext = new DataManage();
             DataManage.SelectedSupplier = supplierToEdit;
             DataManage.SupplierName = supplierToEdit.Name;
-            DataManage.SupplierAddress = supplierToEdit.Address;
+            DataManage.SupplierPhysicalAddress = supplierToEdit.PhysicalAddress;
+            DataManage.SupplierLegalAddress = supplierToEdit.LegalAddress;
             DataManage.SupplierPhone = supplierToEdit.Phone;
+            DataManage.SupplierEmail = supplierToEdit.Email;
         }
 
         private void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

@@ -33,7 +33,7 @@
                           SelectedItem="{Binding SelectedProduct}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Код"
+                            <GridViewColumn Header="Номер"
                                             DisplayMemberBinding="{Binding Path=Id}"/>
                             <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
@@ -73,7 +73,7 @@
                             <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
                             <GridViewColumn Header="Количество товаров"
-                                            DisplayMemberBinding="{Binding Path= CategoryProduct.Count }"/>
+                                            DisplayMemberBinding="{Binding Path= CategoryProducts.Count }"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -100,7 +100,7 @@
                             <GridViewColumn Header="Телефон"
                                             DisplayMemberBinding="{Binding Path=Phone}"/>
                             <GridViewColumn Header="Количество товаров"
-                                            DisplayMemberBinding="{Binding Path=WarehouseProduct.Count}"/>
+                                            DisplayMemberBinding="{Binding Path=WarehouseProducts.Count}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -129,7 +129,7 @@
                             <GridViewColumn Header="Телефон"
                                             DisplayMemberBinding="{Binding Path=Phone}"/>
                             <GridViewColumn Header="Количество поставок"
-                                            DisplayMemberBinding="{Binding Path=SupplierSupply.Count}"/>
+                                            DisplayMemberBinding="{Binding Path=SupplierSupplies.Count}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -156,9 +156,9 @@
                             <GridViewColumn Header="Количество"
                                             DisplayMemberBinding="{Binding Path=Count}"/>
                             <GridViewColumn Header="Поставщик"
-                                            DisplayMemberBinding="{Binding Path=SupplySupplier}"/>
+                                            DisplayMemberBinding="{Binding Path=SupplySupplier.Name}"/>
                             <GridViewColumn Header="Склад"
-                                            DisplayMemberBinding="{Binding Path=SupplyWarehouse}"/>
+                                            DisplayMemberBinding="{Binding Path=SupplyWarehouse.Name}"/>
                             <GridViewColumn Header="Дата отправки"
                                             DisplayMemberBinding="{Binding Path=DepartureDate}"/>
                             <GridViewColumn Header="Дата прибытия"
@@ -238,12 +238,12 @@
                           SelectedItem="{Binding SelectedLog}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Модуль"
-                                            DisplayMemberBinding="{Binding Path=Name}"/>
                             <GridViewColumn Header="Действие"
+                                            DisplayMemberBinding="{Binding Path=Name}"/>
+                            <GridViewColumn Header="Описание"
                                             DisplayMemberBinding="{Binding Path=Description}"/>
-                            <GridViewColumn Header="Сотрудник"
-                                            DisplayMemberBinding="{Binding Path=AuditUser}"/>
+                            <GridViewColumn Header="Пользователь"
+                                            DisplayMemberBinding="{Binding Path=AuditUser.Login}"/>
                             <GridViewColumn Header="Дата"
                                             DisplayMemberBinding="{Binding Path=Date}"/>
                         </GridView>

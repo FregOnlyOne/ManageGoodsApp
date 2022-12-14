@@ -120,17 +120,22 @@ public class DataManage : INotifyPropertyChanged
     public static string WarehouseName { get; set; }
     public static string WarehouseAddress { get; set; }
     public static string WarehousePhone { get; set; }
+    public static User WarehouseUser { get; set; }
 
     // Supplier properties
     public static string SupplierName { get; set; }
-    public static string SupplierAddress { get; set; }
+    public static string SupplierPhysicalAddress { get; set; }
+    public static string SupplierLegalAddress { get; set; }
     public static string SupplierTabIdentificationNumber { get; set; }
     public static string SupplierPhone { get; set; }
+    public static string SupplierEmail { get; set; }
 
     // Supply properties
     public static Product SupplyProduct { get; set; }
     public static int SupplyCount { get; set; }
     public static Warehouse SupplyWarehouse { get; set; }
+    public static DateTime? SupplyDepartureDate { get; set; }
+    public static DateTime? SupplyArrivalDate { get; set; }
 
     // User properties
     public static string UserName { get; set; }
@@ -251,9 +256,13 @@ public class DataManage : INotifyPropertyChanged
                     {
                         SetRedBlockControl(wnd, "NameBlock");
                     }
-                    if (SupplierAddress == null || SupplierAddress.Replace(" ", "").Length == 0)
+                    if (SupplierPhysicalAddress == null || SupplierPhysicalAddress.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControl(wnd, "AddressBlock");
+                        SetRedBlockControl(wnd, "PhysicalAddressBlock");
+                    }
+                    if (SupplierLegalAddress == null || SupplierLegalAddress.Replace(" ", "").Length == 0)
+                    {
+                        SetRedBlockControl(wnd, "LegalAddressBlock");
                     }
                     if (SupplierTabIdentificationNumber == null || SupplierTabIdentificationNumber.Replace(" ", "").Length == 0)
                     {
@@ -263,9 +272,13 @@ public class DataManage : INotifyPropertyChanged
                     {
                         SetRedBlockControl(wnd, "PhoneBlock");
                     }
+                    if (SupplierEmail == null || SupplierEmail.Replace(" ", "").Length == 0)
+                    {
+                        SetRedBlockControl(wnd, "EmailBlock");
+                    }
                     else
                     {
-                        result = DataWorker.CreateSupplier(SupplierName, SupplierAddress, SupplierTabIdentificationNumber, SupplierPhone);
+                        result = DataWorker.CreateSupplier(SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
                         UpdateAllDataView();
                         ShowMessageToUser(result);
                         SetNullValuesToProperties();
@@ -426,7 +439,7 @@ public class DataManage : INotifyPropertyChanged
                     string result = "Не выбран поставщик!";
                     if (SelectedSupplier != null)
                     {
-                        result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierAddress, SupplierTabIdentificationNumber, SupplierPhone);
+                        result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
@@ -442,7 +455,7 @@ public class DataManage : INotifyPropertyChanged
                     string result = "Не выбрана поставка!";
                     if (SelectedSupply != null)
                     {
-                        result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse);
+                        result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
@@ -844,17 +857,22 @@ public class DataManage : INotifyPropertyChanged
         WarehouseName = null;
         WarehouseAddress = null;
         WarehousePhone = null;
+        WarehouseUser = null;
 
         // Supplier properties
         SupplierName = null;
-        SupplierAddress = null;
+        SupplierPhysicalAddress = null;
+        SupplierLegalAddress = null;
         SupplierTabIdentificationNumber = null;
         SupplierPhone = null;
+        SupplierEmail = null;
 
         // Supply properties
         SupplyProduct = null;
         SupplyCount = 0;
         SupplyWarehouse = null;
+        SupplyDepartureDate = null;
+        SupplyArrivalDate = null;
 
         // User properties
         UserName = null;

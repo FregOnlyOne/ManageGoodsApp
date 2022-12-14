@@ -15,15 +15,15 @@ public class Supply
     public Supplier Supplier { get; set; }
     public int? WarehouseId { get; set; }
     public Warehouse Warehouse { get; set; }
-    public DateTime DepartureDate { get; set; }
-    public DateTime ArrivalDate { get; set; }
+    public DateTime? DepartureDate { get; set; }
+    public DateTime? ArrivalDate { get; set; }
 
     [NotMapped]
     public string Status
     {
         get
         {
-            if (ArrivalDate < DepartureDate)
+            if (ArrivalDate > DateTime.Today || ArrivalDate == null)
             {
                 return "В пути";
             }

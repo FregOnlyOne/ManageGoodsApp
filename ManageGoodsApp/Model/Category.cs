@@ -10,7 +10,7 @@ public class Category
     public List<Product> Products { get; set; }
 
     [NotMapped]
-    public List<Product> CategoryProduct
+    public List<Product> CategoryProducts
     {
         get
         {

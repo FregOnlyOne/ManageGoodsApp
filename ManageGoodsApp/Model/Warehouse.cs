@@ -16,7 +16,7 @@ public class Warehouse
     {
         get
         {
-            return DataWorker.GetAllProductsByCategoryId(Id);
+            return DataWorker.GetAllProductsByWarehouseId(Id);
         }
     }
 }

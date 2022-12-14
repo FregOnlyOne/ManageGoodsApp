@@ -46,8 +46,7 @@
             <TextBox Name="LoginBlock"
                      Text="{Binding UserLogin}"/>
             <TextBlock Text="Пароль"/>
-            <PasswordBox Name="PasswordBlock"
-                         PasswordChanged="PasswordBox_PasswordChanged"/>
+            <PasswordBox Name="PasswordBlock" />
             <TextBlock Text="Должность"/>
             <ComboBox ItemsSource="{Binding AllRoles}"
                       DisplayMemberPath="Name"

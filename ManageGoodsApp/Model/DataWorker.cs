@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using ManageGoodsApp.Model;
 using ManageGoodsApp.Model.Data;
 
@@ -29,7 +30,7 @@ public static class DataWorker
             };
             db.Products.Add(newProduct);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлен!";
         }
         return result;
     }
@@ -48,7 +49,7 @@ public static class DataWorker
             };
             db.Categories.Add(newCategory);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлена!";
         }
         return result;
     }
@@ -69,12 +70,12 @@ public static class DataWorker
             };
             db.Warehouses.Add(newWarehouse);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлен!";
         }
         return result;
     }
 
-    public static string CreateSupplier(string name, string address, string taxIdentificationNumber, string phone)
+    public static string CreateSupplier(string name, string physicalAddress, string legalAddress, string taxIdentificationNumber, string phone, string email)
     {
         string result = "Уже существует!";
         using ApplicationContext db = new();
@@ -85,18 +86,20 @@ public static class DataWorker
             Supplier newSupplier = new()
             {
                 Name = name,
-                Address = address,
+                PhysicalAddress = physicalAddress,
+                LegalAddress = legalAddress,
                 TaxIdentificationNumber = taxIdentificationNumber,
-                Phone = phone
+                Phone = phone,
+                Email = email
             };
             db.Suppliers.Add(newSupplier);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлен!";
         }
         return result;
     }
 
-    public static string CreateSupply(Product product, int count, Warehouse warehouse)
+    public static string CreateSupply(Product product, int count, Warehouse warehouse, DateTime? arrivalDate = null)
     {
         string result = "Уже существует!";
         using ApplicationContext db = new();
@@ -110,11 +113,12 @@ public static class DataWorker
                 ProductId = product.Id,
                 Count = count,
                 WarehouseId = warehouse.Id,
-                DepartureDate = currentDate
+                DepartureDate = currentDate,
+                ArrivalDate = arrivalDate
             };
             db.Supplies.Add(newSupply);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлена!";
         }
         return result;
     }
@@ -141,7 +145,7 @@ public static class DataWorker
             };
             db.Users.Add(newUser);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлен!";
         }
         return result;
     }
@@ -160,7 +164,7 @@ public static class DataWorker
             };
             db.Roles.Add(newRole);
             db.SaveChanges();
-            result = "Добавлено!";
+            result = "Добавлена!";
         }
         return result;
     }
@@ -277,6 +281,13 @@ public static class DataWorker
 
     #region GET ALL BY ID
 
+    public static List<Product> GetAllProductsByWarehouseId(int warehouseId)
+    {
+        using ApplicationContext db = new();
+        List<Product> products = (from product in GetAllProducts() where product.WarehouseId == warehouseId select product).ToList();
+        return products;
+    }
+
     public static List<Product> GetAllProductsByCategoryId(int categoryId)
     {
         using ApplicationContext db = new();
@@ -344,21 +355,23 @@ public static class DataWorker
         return result;
     }
 
-    public static string EditSupplier(Supplier oldSupplier, string newName, string newAddress, string newTaxIdentificationNumber, string newPhone)
+    public static string EditSupplier(Supplier oldSupplier, string newName, string newPhysicalAddress, string newLegalAddress, string newTaxIdentificationNumber, string newPhone, string newEmail)
     {
         string result = "Такого поставщика не существует!";
         using ApplicationContext db = new();
         Supplier supplier = db.Suppliers.FirstOrDefault(d => d.Id == oldSupplier.Id);
         supplier.Name = newName;
-        supplier.Address = newAddress;
+        supplier.PhysicalAddress = newPhysicalAddress;
+        supplier.LegalAddress = newLegalAddress;
         supplier.TaxIdentificationNumber = newTaxIdentificationNumber;
         supplier.Phone = newPhone;
+        supplier.Email = newEmail;
         db.SaveChanges();
         result = "Сделано! Поставщик " + supplier.Name + " изменён.";
         return result;
     }
 
-    public static string EditSupply(Supply oldSupply, Product newProduct, int newCount, Warehouse newWarehouse)
+    public static string EditSupply(Supply oldSupply, Product newProduct, int newCount, Warehouse newWarehouse, DateTime? newDepartureDate, DateTime? newArrivalDate = null)
     {
         string result = "Такой поставки не существует!";
         using ApplicationContext db = new();
@@ -366,6 +379,8 @@ public static class DataWorker
         supply.ProductId = newProduct.Id;
         supply.Count = newCount;
         supply.WarehouseId = newWarehouse.Id;
+        supply.DepartureDate = newDepartureDate;
+        supply.ArrivalDate = newArrivalDate;
         db.SaveChanges();
         result = "Сделано! Поставка " + supply.Id + " изменена.";
         return result;
