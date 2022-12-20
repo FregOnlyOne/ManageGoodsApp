@@ -5,62 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Добавление сотрудника" Height="350" Width="500"
+        Title="Добавление сотрудника" Height="475" Width="850"
         ResizeMode="NoResize" Name="AddNewUserWnd">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Добавление сотрудника"/>
+                <Label FontSize="22" Content="Добавление сотрудника"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="FloralWhite"/>
+        <StackPanel Grid.Row="1" Grid.Column="0"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Имя"/>
-            <TextBox Name="NameBlock"
+            <TextBlock Text="Имя" FontSize="16"/>
+            <TextBox Name="NameBlock" FontSize="16"
+                     Margin="0 0 0 10"
                      Text="{Binding UserName}"/>
-            <TextBlock Text="Фамилия"/>
-            <TextBox Name="SurnameBlock"
+            <TextBlock Text="Фамилия" FontSize="16"/>
+            <TextBox Name="SurnameBlock" FontSize="16"
+                     Margin="0 0 0 10"
                      Text="{Binding UserSurname}"/>
-            <TextBlock Text="Отчество"/>
-            <TextBox Name="PatronymicBlock"
+            <TextBlock Text="Отчество" FontSize="16"/>
+            <TextBox Name="PatronymicBlock" FontSize="16"
+                     Margin="0 0 0 10"
                      Text="{Binding UserPatronymic}"/>
-            <TextBlock Text="Электронная почта"/>
-            <TextBox Name="EmailBlock"
+            <TextBlock Text="Электронная почта" FontSize="16"/>
+            <TextBox Name="EmailBlock" FontSize="16"
+                     Margin="0 0 0 10"
                      Text="{Binding UserEmail}"/>
-            <TextBlock Text="Телефон"/>
-            <TextBox Name="PhoneBlock" PreviewTextInput="PreviewTextInput"
+            <TextBlock Text="Телефон" FontSize="16"/>
+            <TextBox Name="PhoneBlock" FontSize="16"
+                     PreviewTextInput="PreviewTextInput"
                      Text="{Binding UserPhone}"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1"  Width="200" Orientation="Vertical"
+        <StackPanel Grid.Row="1" Grid.Column="1"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Логин"/>
-            <TextBox Name="LoginBlock"
+            <TextBlock Text="Логин" FontSize="16"/>
+            <TextBox Name="LoginBlock" FontSize="16"
+                     Margin="0 0 0 10"
                      Text="{Binding UserLogin}"/>
-            <TextBlock Text="Пароль"/>
-            <PasswordBox Name="PasswordBlock" />
-            <TextBlock Text="Должность"/>
+            <TextBlock Text="Пароль" FontSize="16"/>
+            <PasswordBox Name="PasswordBlock" FontSize="16"
+                         Margin="0 0 0 10"
+                         PasswordChanged="PasswordBox_PasswordChanged"/>
+            <TextBlock Text="Роль" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllRoles}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16"
+                      Margin="0 0 0 10"
                       SelectedItem="{Binding UserRole}"/>
-            <TextBlock Text="Склад"/>
+            <TextBlock Text="Склад" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllWarehouses}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16" 
                       SelectedItem="{Binding UserWarehouse}"/>
-            <Separator Height="22" Opacity="0"/>
+            <Separator Height="45" Opacity="0"/>
         </StackPanel>
         <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Добавить"
-                        Command="{Binding AddItem}"
+                        Command="{Binding AddItem}" FontSize="18"
                         CommandParameter="{Binding ElementName=AddNewUserWnd}"/>
             </StackPanel>
         </Border>

@@ -11,6 +11,8 @@ public class Product
     public Category Category { get; set; }
     public int WarehouseId { get; set; }
     public Warehouse Warehouse { get; set; }
+    public string Barcode { get; set; }
+    public string Weight { get; set; }
     public int Count { get; set; }
     public double Price { get; set; }
     public int Discount { get; set; }

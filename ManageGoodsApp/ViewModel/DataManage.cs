@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows;
 using ManageGoodsApp.Model;
 using System.Collections.Generic;
+using Validation = ManageGoodsApp.Model.Validation;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace ManageGoodsApp.ViewModel;
 
@@ -13,7 +15,7 @@ public class DataManage : INotifyPropertyChanged
 {
     #region GET ALL OBJECTS
 
-    private List<Product> allProducts= DataWorker.GetAllProducts();
+    private List<Product> allProducts = DataWorker.GetAllProducts();
     public List<Product> AllProducts
     {
         get { return allProducts; }
@@ -109,6 +111,8 @@ public class DataManage : INotifyPropertyChanged
     public static string ProductName { get; set; }
     public static Category ProductCategory { get; set; }
     public static Warehouse ProductWarehouse { get; set; }
+    public static string ProductBarcode { get; set; }
+    public static string ProductWeight { get; set; }
     public static int ProductCount { get; set; }
     public static double ProductPrice { get; set; }
     public static int ProductDiscount { get; set; }
@@ -181,194 +185,310 @@ public class DataManage : INotifyPropertyChanged
             {
                 Window wnd = obj as Window;
                 string result = "";
-                if (wnd.Name == "AddNewProductWnd")
+                switch (wnd.Name)
                 {
-                    if (ProductName == null || ProductName.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    if (ProductCategory == null)
-                    {
-                        MessageBox.Show("Укажите категорию!");
-                    }
-                    if (ProductWarehouse == null)
-                    {
-                        MessageBox.Show("Укажите склад!");
-                    }
-                    if (ProductCount == 0)
-                    {
-                        SetRedBlockControl(wnd, "CountBlock");
-                    }
-                    if (ProductPrice == 0)
-                    {
-                        SetRedBlockControl(wnd, "PriceBlock");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateProduct(ProductName, ProductCategory, ProductWarehouse, ProductCount, ProductPrice, ProductDiscount);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
-                }
-                if (wnd.Name == "AddNewCategoryWnd")
-                {
-                    if (CategoryName == null || CategoryName.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateCategory(CategoryName);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
-                }
-                if (wnd.Name == "AddNewWarehouseWnd")
-                {
-                    if (WarehouseName == null || WarehouseName.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    if (WarehouseAddress == null || WarehouseAddress.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "AddressBlock");
-                    }
-                    if (WarehousePhone == null || WarehousePhone.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateWarehouse(WarehouseName, WarehouseAddress, WarehousePhone);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
-                }
-                if (wnd.Name == "AddNewSupplierWnd")
-                {
-                    if (SupplierName == null || SupplierName.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    if (SupplierPhysicalAddress == null || SupplierPhysicalAddress.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "PhysicalAddressBlock");
-                    }
-                    if (SupplierLegalAddress == null || SupplierLegalAddress.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "LegalAddressBlock");
-                    }
-                    if (SupplierTabIdentificationNumber == null || SupplierTabIdentificationNumber.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "TabIdentificationNumberBlock");
-                    }
-                    if (SupplierPhone == null || SupplierPhone.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    if (SupplierEmail == null || SupplierEmail.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "EmailBlock");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateSupplier(SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
-                }
-                if (wnd.Name == "AddNewSupplyWnd")
-                {
-                    if (SupplyProduct == null)
-                    {
-                        MessageBox.Show("Укажите товар!");
-                    }
-                    if (SupplyCount == 0)
-                    {
-                        SetRedBlockControl(wnd, "AddressBlock");
-                    }
-                    if (SupplyWarehouse == null)
-                    {
-                        MessageBox.Show("Укажите склад!");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateSupply(SupplyProduct, SupplyCount, SupplyWarehouse);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
-                }
-                if (wnd.Name == "AddNewUserWnd")
-                {
-                    if (UserName == null || UserName.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    if (UserSurname == null || UserSurname.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "SurnameBlock");
-                    }
-                    if (UserPatronymic == null || UserPatronymic.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "PatronymicBlock");
-                    }
-                    if (UserEmail == null || UserEmail.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "EmailBlock");
-                    }
-                    if (UserPhone == null || UserPhone.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    if (UserLogin == null || UserLogin.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "LoginBlock");
-                    }
-                    if (UserPassword == null || UserPassword.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "PasswordBlock");
-                    }
-                    if (UserRole == null)
-                    {
-                        MessageBox.Show("Укажите роль!");
-                    }
-                    if (UserWarehouse == null)
-                    {
-                        MessageBox.Show("Укажите склад!");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateUser(UserName, UserSurname, UserPatronymic, UserEmail, UserPhone, UserLogin, UserPassword, UserRole, UserWarehouse);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
-                }
-                if (wnd.Name == "AddNewRoleWnd")
-                {
-                    if (RoleName == null || RoleName.Replace(" ", "").Length == 0)
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    else
-                    {
-                        result = DataWorker.CreateRole(RoleName);
-                        UpdateAllDataView();
-                        ShowMessageToUser(result);
-                        SetNullValuesToProperties();
-                        wnd.Close();
-                    }
+                    case "AddNewProductWnd":
+                        if (Validation.IsNullString(ProductName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (ProductCategory == null)
+                        {
+                            MessageBox.Show("Укажите категорию!");
+                        }
+                        if (ProductWarehouse == null)
+                        {
+                            MessageBox.Show("Укажите склад!");
+                        }
+                        if (Validation.IsNullString(ProductBarcode))
+                        {
+                            SetRedBlockControl(wnd, "BarcodeBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "BarcodeBlock");
+                        }
+                        if (Validation.IsNullString(ProductWeight))
+                        {
+                            SetRedBlockControl(wnd, "WeightBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "WeightBlock");
+                        }
+                        if (ProductCount == 0 || ProductCount > 100000)
+                        {
+                            SetRedBlockControl(wnd, "CountBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "CountBlock");
+                        }
+                        if (ProductPrice == 0 || ProductPrice > 100000000)
+                        {
+                            SetRedBlockControl(wnd, "PriceBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "PriceBlock");
+                        }
+                        if (!Validation.IsNullString(ProductName) &&
+                                 ProductCategory != null &&
+                                 ProductWarehouse == null &&
+                                 !Validation.IsNullString(ProductBarcode) &&
+                                 !Validation.IsNullString(ProductWeight) &&
+                                 ProductPrice > 0)
+                        {
+                            result = DataWorker.CreateProduct(ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
+
+                    case "AddNewCategoryWnd":
+                        if (Validation.IsNullString(CategoryName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            result = DataWorker.CreateCategory(CategoryName);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
+                    case "AddNewWarehouseWnd":
+                        if (Validation.IsNullString(WarehouseName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(WarehouseAddress))
+                        {
+                            SetRedBlockControl(wnd, "AddressBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "AddressBlock");
+                        }
+                        if (Validation.IsNullString(WarehousePhone))
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        else if (Validation.IsPhoneNumber(WarehousePhone))
+                        {
+                            SetDefaultBlockControl(wnd, "PhoneBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        if (!Validation.IsNullString(WarehouseName) &&
+                            !Validation.IsNullString(WarehouseAddress) &&
+                            !Validation.IsNullString(WarehousePhone) &&
+                            Validation.IsPhoneNumber(WarehousePhone))
+                        {
+                            result = DataWorker.CreateWarehouse(WarehouseName, WarehouseAddress, WarehousePhone);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
+                    case "AddNewSupplierWnd":
+                        if (Validation.IsNullString(SupplierName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(SupplierPhysicalAddress))
+                        {
+                            SetRedBlockControl(wnd, "PhysicalAddressBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "PhysicalAddressBlock");
+                        }
+                        if (Validation.IsNullString(SupplierLegalAddress))
+                        {
+                            SetRedBlockControl(wnd, "LegalAddressBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "LegalAddressBlock");
+                        }
+                        if (Validation.IsNullString(SupplierTabIdentificationNumber))
+                        {
+                            SetRedBlockControl(wnd, "TabIdentificationNumberBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "TabIdentificationNumberBlock");
+                        }
+                        if (Validation.IsNullString(SupplierPhone))
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        else if (Validation.IsPhoneNumber(SupplierPhone))
+                        {
+                            SetDefaultBlockControl(wnd, "PhoneBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        if (Validation.IsNullString(SupplierEmail))
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "EmailBlock");
+                        }
+                        if (!Validation.IsNullString(SupplierName) &&
+                            !Validation.IsNullString(SupplierPhysicalAddress) &&
+                            !Validation.IsNullString(SupplierLegalAddress) &&
+                            !Validation.IsNullString(SupplierTabIdentificationNumber) &&
+                            !Validation.IsNullString(SupplierPhone) &&
+                            !Validation.IsNullString(SupplierEmail))
+                        {
+                            result = DataWorker.CreateSupplier(SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
+                    case "AddNewSupplyWnd":
+                        if (SupplyProduct == null)
+                        {
+                            MessageBox.Show("Укажите товар!");
+                        }
+                        if (SupplyCount == 0)
+                        {
+                            SetRedBlockControl(wnd, "CountBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "CountBlock");
+                        }
+                        if (SupplyWarehouse == null)
+                        {
+                            MessageBox.Show("Укажите склад!");
+                        }
+                        else if (SupplyProduct != null && SupplyCount > 0)
+                        {
+                            result = DataWorker.CreateSupply(SupplyProduct, SupplyCount, SupplyWarehouse);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
+                    case "AddNewUserWnd":
+                        if (Validation.IsNullString(UserName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(UserSurname))
+                        {
+                            SetRedBlockControl(wnd, "SurnameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "SurnameBlock");
+                        }
+                        if (Validation.IsNullString(UserEmail))
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "EmailBlock");
+                        }
+                        if (Validation.IsNullString(UserPhone))
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        else if (Validation.IsPhoneNumber(UserPhone))
+                        {
+                            SetDefaultBlockControl(wnd, "PhoneBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        if (Validation.IsNullString(UserLogin))
+                        {
+                            SetRedBlockControl(wnd, "LoginBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "LoginBlock");
+                        }
+                        if (Validation.IsNullString(UserPassword))
+                        {
+                            SetRedBlockControl(wnd, "PasswordBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "PasswordBlock");
+                        }
+                        if (UserRole == null)
+                        {
+                            MessageBox.Show("Укажите роль!");
+                        }
+                        else if (UserWarehouse == null && UserRole.Name != "Администратор")
+                        {
+                            MessageBox.Show("Укажите склад!");
+                        }
+                        else if (!Validation.IsNullString(UserName) &&
+                                 !Validation.IsNullString(UserSurname) &&
+                                 !Validation.IsNullString(UserEmail) &&
+                                 !Validation.IsNullString(UserPhone) &&
+                                 !Validation.IsNullString(UserLogin) &&
+                                 !Validation.IsNullString(UserPassword) &&
+                                 UserRole != null)
+                        {
+                            result = DataWorker.CreateUser(UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserPassword, UserRole, UserWarehouse, UserPatronymic);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
+                    case "AddNewRoleWnd":
+                        if (Validation.IsNullString(RoleName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            result = DataWorker.CreateRole(RoleName);
+                            UpdateAllDataView();
+                            ShowMessageToUser(result);
+                            SetNullValuesToProperties();
+                            wnd.Close();
+                        }
+                        break;
                 }
             });
         }
@@ -388,10 +508,10 @@ public class DataManage : INotifyPropertyChanged
                 Window wnd = obj as Window;
                 if (wnd.Name == "EditProductWnd")
                 {
-                    string result = "Не выбран отдел!";
-                    if (SelectedProduct != null)
+                    string result = "Не выбран товар!";
+                    if (SelectedTabItem.Name == "ProductsTabItem" && SelectedProduct != null)
                     {
-                        result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductCount, ProductPrice, ProductDiscount);
+                        result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
@@ -420,7 +540,7 @@ public class DataManage : INotifyPropertyChanged
                 }
                 if (wnd.Name == "EditWarehouseWnd")
                 {
-                    string result = "Не выбран отдел!";
+                    string result = "Не выбран склад!";
                     if (SelectedWarehouse != null)
                     {
                         result = DataWorker.EditWarehouse(SelectedWarehouse, WarehouseName, WarehouseAddress, WarehousePhone);
@@ -471,7 +591,7 @@ public class DataManage : INotifyPropertyChanged
                     string result = "Не выбран пользователь!";
                     if (SelectedUser != null)
                     {
-                        result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserPatronymic, UserEmail, UserPhone, UserLogin, UserPassword, UserRole, UserWarehouse);
+                        result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
@@ -968,10 +1088,18 @@ public class DataManage : INotifyPropertyChanged
 
     #endregion
 
+    #region VALIDATION OF REQUIRED TEXTBOXES
+
     private void SetRedBlockControl(Window wnd, string blockName)
     {
         Control block = wnd.FindName(blockName) as Control;
         block.BorderBrush = Brushes.Red;
+    }
+
+    private void SetDefaultBlockControl(Window wnd, string blockName)
+    {
+        Control block = wnd.FindName(blockName) as Control;
+        block.ClearValue(TextBox.BorderBrushProperty);
     }
 
     private void ShowMessageToUser(string message)
@@ -979,6 +1107,8 @@ public class DataManage : INotifyPropertyChanged
         MessageView messageView = new MessageView(message);
         SetCenterPositionAndOpen(messageView);
     }
+
+    #endregion
 
     public event PropertyChangedEventHandler PropertyChanged;
     private void NotifyPropertyChanged(string propertyName)

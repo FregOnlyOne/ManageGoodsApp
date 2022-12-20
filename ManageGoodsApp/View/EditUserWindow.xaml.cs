@@ -21,12 +21,13 @@ namespace ManageGoodsApp.View
             DataManage.UserPatronymic = userToEdit.Patronymic;
             DataManage.UserEmail = userToEdit.Email;
             DataManage.UserPhone = userToEdit.Phone;
+            DataManage.UserLogin = userToEdit.Login;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (this.DataContext != null)
-            { ((dynamic)this.DataContext).UserPassword = ((PasswordBox)sender).Password; }
+            if (DataContext != null)
+            { DataManage.UserPassword = ((PasswordBox)sender).Password; }
         }
 
         private void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

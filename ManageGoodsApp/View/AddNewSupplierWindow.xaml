@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Новый поставщик" Height="300" Width="300"
+        Title="Новый поставщик" Height="300" Width="500"
         ResizeMode="NoResize" Name="AddNewSupplierWnd">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,28 +13,46 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#FFE1E7FF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE1E7FF">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label FontSize="16" Content="Новый поставщик"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Width="200" Orientation="Vertical"
+        <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Название"/>
             <TextBox Name="NameBlock"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag='ООО "Рога и копыта"'
                      Text="{Binding SupplierName}"/>
-            <TextBlock Text="Адрес"/>
-            <TextBox Name="AddressBlock"
-                     Text="{Binding SupplierAddress}"/>
+            <TextBlock Text="Физический адрес"/>
+            <TextBox Name="PhysicalAddressBlock"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="г. Орск, ул. Ленина, д. 21"
+                     Text="{Binding SupplierPhysicalAddress}"/>
+            <TextBlock Text="Юридический адрес"/>
+            <TextBox Name="LegalAddressBlock"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="г. Орск, ул. Ленина, д. 21"
+                     Text="{Binding SupplierLegalAddress}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1"  Width="200" Orientation="Vertical"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="ИНН"/>
             <TextBox Name="TaxIdentificationNumberBlock" PreviewTextInput="PreviewTextInput"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Код"
                      Text="{Binding SupplierTaxIdentificationNumber}"/>
+            <TextBlock Text="Почта"/>
+            <TextBox Name="EmailBlock" PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="email@mail.ru"
+                     Text="{Binding SupplierEmail}"/>
             <TextBlock Text="Телефон"/>
             <TextBox Name="PhoneBlock" PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="89010010101"
                      Text="{Binding SupplierPhone}"/>
         </StackPanel>
-        <Border Grid.Row="2" Background="#FF6D6D6D">
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Добавить"
                         Command="{Binding AddItem}"

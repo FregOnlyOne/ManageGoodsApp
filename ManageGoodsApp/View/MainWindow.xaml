@@ -5,261 +5,272 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Главное окно" Height="450" Width="800">
+        Title="Главное окно" Height="650" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="24" Content="Управление товарами" FontFamily="Candara Light"/>
+                <Label FontSize="28" Content="Управление товарами" FontFamily="Candara Light"/>
             </StackPanel>
         </Border>
-        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTabItem}">
-            <TabItem Name="ProductsTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Товары"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllProducts" ItemsSource="{Binding AllProducts}"
+        <Border Grid.Row="1" Padding="50 20" Background="FloralWhite">
+            <TabControl FontSize="16" SelectedItem="{Binding SelectedTabItem}">
+                <TabItem Name="ProductsTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Товары"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllProducts" ItemsSource="{Binding AllProducts}"
                           SelectedItem="{Binding SelectedProduct}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Номер"
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Номер"
                                             DisplayMemberBinding="{Binding Path=Id}"/>
-                            <GridViewColumn Header="Название"
+                                <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Категория"
+                                <GridViewColumn Header="Категория"
                                             DisplayMemberBinding="{Binding Path=ProductCategory.Name}"/>
-                            <GridViewColumn Header="Склад"
+                                <GridViewColumn Header="Склад"
                                             DisplayMemberBinding="{Binding Path=ProductWarehouse.Name}"/>
-                            <GridViewColumn Header="Количество"
+                                <GridViewColumn Header="Количество"
                                             DisplayMemberBinding="{Binding Path=Count}"/>
-                            <GridViewColumn Header="Цена"
+                                <GridViewColumn Header="Цена"
                                             DisplayMemberBinding="{Binding Path=Price}"/>
-                            <GridViewColumn Header="Скидка"
+                                <GridViewColumn Header="Скидка"
                                             DisplayMemberBinding="{Binding Path=Discount}"/>
-                            <GridViewColumn Header="Цена по скидке"
+                                <GridViewColumn Header="Цена по скидке"
                                             DisplayMemberBinding="{Binding Path=DiscountPrice}"/>
-                            <GridViewColumn Header="Суммарная стоимость"
+                                <GridViewColumn Header="Суммарная стоимость"
                                             DisplayMemberBinding="{Binding Path=TotalCost}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="CategoriesTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Категории товаров"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}"
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="CategoriesTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Категории товаров"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}"
                           SelectedItem="{Binding SelectedCategory}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Название"
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Количество товаров"
+                                <GridViewColumn Header="Количество товаров"
                                             DisplayMemberBinding="{Binding Path= CategoryProducts.Count }"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="WarehousesTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Склады"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllWarehouses" ItemsSource="{Binding AllWarehouses}"
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="WarehousesTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Склады"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllWarehouses" ItemsSource="{Binding AllWarehouses}"
                           SelectedItem="{Binding SelectedWarehouse}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Название"
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Адрес"
+                                <GridViewColumn Header="Адрес"
                                             DisplayMemberBinding="{Binding Path=Address}"/>
-                            <GridViewColumn Header="Телефон"
+                                <GridViewColumn Header="Телефон"
                                             DisplayMemberBinding="{Binding Path=Phone}"/>
-                            <GridViewColumn Header="Количество товаров"
+                                <GridViewColumn Header="Количество товаров"
                                             DisplayMemberBinding="{Binding Path=WarehouseProducts.Count}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="SuppliersTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Поставщики"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllSuppliers" ItemsSource="{Binding AllSuppliers}"
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="SuppliersTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Поставщики"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllSuppliers" ItemsSource="{Binding AllSuppliers}"
                           SelectedItem="{Binding SelectedSupplier}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Название"
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Адрес"
-                                            DisplayMemberBinding="{Binding Path=Address}"/>
-                            <GridViewColumn Header="ИНН"
+                                <GridViewColumn Header="Физический адрес"
+                                            DisplayMemberBinding="{Binding Path=PhysicalAddress}"/>
+                                <GridViewColumn Header="Юридический адрес"
+                                            DisplayMemberBinding="{Binding Path=LegalAddress}"/>
+                                <GridViewColumn Header="ИНН"
                                             DisplayMemberBinding="{Binding Path=TaxIdentificationNumber}"/>
-                            <GridViewColumn Header="Телефон"
-                                            DisplayMemberBinding="{Binding Path=Phone}"/>
-                            <GridViewColumn Header="Количество поставок"
-                                            DisplayMemberBinding="{Binding Path=SupplierSupplies.Count}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="SuppliesTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Поставки"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllSupplies" ItemsSource="{Binding AllSupplies}"
-                          SelectedItem="{Binding SelectedSupply}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Номер"
-                                            DisplayMemberBinding="{Binding Path=Id}"/>
-                            <GridViewColumn Header="Товар"
-                                            DisplayMemberBinding="{Binding Path=SupplyProduct}"/>
-                            <GridViewColumn Header="Количество"
-                                            DisplayMemberBinding="{Binding Path=Count}"/>
-                            <GridViewColumn Header="Поставщик"
-                                            DisplayMemberBinding="{Binding Path=SupplySupplier.Name}"/>
-                            <GridViewColumn Header="Склад"
-                                            DisplayMemberBinding="{Binding Path=SupplyWarehouse.Name}"/>
-                            <GridViewColumn Header="Дата отправки"
-                                            DisplayMemberBinding="{Binding Path=DepartureDate}"/>
-                            <GridViewColumn Header="Дата прибытия"
-                                            DisplayMemberBinding="{Binding Path=ArrivalDate}"/>
-                            <GridViewColumn Header="Статус"
-                                            DisplayMemberBinding="{Binding Path=Status}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="UsersTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Пользователи"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllUsers" ItemsSource="{Binding AllUsers}"
-                          SelectedItem="{Binding SelectedUser}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Имя"
-                                            DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Фамилия"
-                                            DisplayMemberBinding="{Binding Path=Surname}"/>
-                            <GridViewColumn Header="Отчество"
-                                            DisplayMemberBinding="{Binding Path=Patronymic}"/>
-                            <GridViewColumn Header="Почта"
+                                <GridViewColumn Header="Почта"
                                             DisplayMemberBinding="{Binding Path=Email}"/>
-                            <GridViewColumn Header="Телефон"
+                                <GridViewColumn Header="Телефон"
                                             DisplayMemberBinding="{Binding Path=Phone}"/>
-                            <GridViewColumn Header="Роль"
+                                <GridViewColumn Header="Количество поставок"
+                                            DisplayMemberBinding="{Binding Path=SupplierSupplies.Count}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="SuppliesTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Поставки"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllSupplies" ItemsSource="{Binding AllSupplies}"
+                          SelectedItem="{Binding SelectedSupply}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Номер"
+                                            DisplayMemberBinding="{Binding Path=Id}"/>
+                                <GridViewColumn Header="Товар"
+                                            DisplayMemberBinding="{Binding Path=SupplyProduct.Name}"/>
+                                <GridViewColumn Header="Количество"
+                                            DisplayMemberBinding="{Binding Path=Count}"/>
+                                <GridViewColumn Header="Поставщик"
+                                            DisplayMemberBinding="{Binding Path=SupplySupplier.Name}"/>
+                                <GridViewColumn Header="Склад"
+                                            DisplayMemberBinding="{Binding Path=SupplyWarehouse.Name}"/>
+                                <GridViewColumn Header="Дата отправки"
+                                            DisplayMemberBinding="{Binding Path=DepartureDate}"/>
+                                <GridViewColumn Header="Дата прибытия"
+                                            DisplayMemberBinding="{Binding Path=ArrivalDate}"/>
+                                <GridViewColumn Header="Статус"
+                                            DisplayMemberBinding="{Binding Path=Status}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="UsersTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Пользователи"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllUsers" ItemsSource="{Binding AllUsers}"
+                          SelectedItem="{Binding SelectedUser}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Имя"
+                                            DisplayMemberBinding="{Binding Path=Name}"/>
+                                <GridViewColumn Header="Фамилия"
+                                            DisplayMemberBinding="{Binding Path=Surname}"/>
+                                <GridViewColumn Header="Отчество"
+                                            DisplayMemberBinding="{Binding Path=Patronymic}"/>
+                                <GridViewColumn Header="Логин"
+                                            DisplayMemberBinding="{Binding Path=Login}"/>
+                                <GridViewColumn Header="Почта"
+                                            DisplayMemberBinding="{Binding Path=Email}"/>
+                                <GridViewColumn Header="Телефон"
+                                            DisplayMemberBinding="{Binding Path=Phone}"/>
+                                <GridViewColumn Header="Роль"
                                             DisplayMemberBinding="{Binding Path=UserRole.Name}"/>
-                            <GridViewColumn Header="Склад"
+                                <GridViewColumn Header="Склад"
                                             DisplayMemberBinding="{Binding Path=UserWarehouse.Name}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="RolesTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Роли пользователей"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllRoles" ItemsSource="{Binding AllRoles}"
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="RolesTabItem" FontSize="18">
+                    <TabItem.Header>
+                        <TextBlock Text="Роли пользователей"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllRoles" ItemsSource="{Binding AllRoles}"
                           SelectedItem="{Binding SelectedRole}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Название"
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Количество сотрудников"
+                                <GridViewColumn Header="Количество пользователей"
                                             DisplayMemberBinding="{Binding Path=RoleUsers.Count}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            <TabItem Name="AuditTabItem" Visibility="Hidden">
-                <TabItem.Header>
-                    <TextBlock Text="Аудит"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView x:Name="ViewAllLogs" ItemsSource="{Binding AllLogs}"
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="AuditTabItem" FontSize="18" Visibility="Hidden">
+                    <TabItem.Header>
+                        <TextBlock Text="Аудит"/>
+                    </TabItem.Header>
+                    <TabItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                        </ContextMenu>
+                    </TabItem.ContextMenu>
+                    <ListView x:Name="ViewAllLogs" ItemsSource="{Binding AllLogs}"
                           SelectedItem="{Binding SelectedLog}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Действие"
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Действие"
                                             DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="Описание"
+                                <GridViewColumn Header="Описание"
                                             DisplayMemberBinding="{Binding Path=Description}"/>
-                            <GridViewColumn Header="Пользователь"
+                                <GridViewColumn Header="Пользователь"
                                             DisplayMemberBinding="{Binding Path=AuditUser.Login}"/>
-                            <GridViewColumn Header="Дата"
+                                <GridViewColumn Header="Дата"
                                             DisplayMemberBinding="{Binding Path=Date}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-        </TabControl>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+        </Border>
         <Border Grid.Row="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="10 0" Height="35" Content="Новый товар"
+                        FontSize="18"
                         Command="{Binding OpenAddNewProductWnd}"/>
                 <Separator Opacity="0" Width="20"></Separator>
                 <Button Padding="10 0" Height="35" Content="Новая поставка"
+                        FontSize="18"
                         Command="{Binding OpenAddNewSupplyWnd}"/>
                 <Separator Opacity="0" Width="20"></Separator>
                 <Button Padding="10 0" Height="35" Content="Новый пользователь"
+                        FontSize="18"
                         Command="{Binding OpenAddNewUserWnd}"/>
             </StackPanel>
         </Border>

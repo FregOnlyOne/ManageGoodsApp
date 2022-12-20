@@ -11,7 +11,7 @@ public static class DataWorker
 {
     #region CREATE
 
-    public static string CreateProduct(string name, Category category, Warehouse warehouse, int count, double price, int discount)
+    public static string CreateProduct(string name, Category category, Warehouse warehouse, string barcode, string weight, int count, double price, int discount)
     {
         string result = "Уже существует!";
         using ApplicationContext db = new();
@@ -24,6 +24,8 @@ public static class DataWorker
                 Name = name,
                 CategoryId = category.Id,
                 WarehouseId = warehouse.Id,
+                Barcode = barcode,
+                Weight = weight,
                 Count = count,
                 Price = price,
                 Discount = discount
@@ -123,7 +125,7 @@ public static class DataWorker
         return result;
     }
 
-    public static string CreateUser(string name, string surname, string patronymic, string email, string phone, string login, string password, Role role, Warehouse warehouse)
+    public static string CreateUser(string name, string surname, string email, string phone, string login, string password, Role role, Warehouse warehouse = null, string patronymic = null)
     {
         string result = "Уже существует!";
         using ApplicationContext db = new();
@@ -135,14 +137,20 @@ public static class DataWorker
             {
                 Name = name,
                 Surname = surname,
-                Patronymic = patronymic,
                 Email = email,
                 Phone = phone,
                 Login = login,
                 Password = Validation.CreateHash(password),
-                RoleId = role.Id,
-                WarehouseId = warehouse.Id
+                RoleId = role.Id
             };
+            if (patronymic != null)
+            {
+                newUser.Patronymic = patronymic;
+            }
+            if (warehouse != null)
+            {
+                newUser.WarehouseId = warehouse.Id;
+            }
             db.Users.Add(newUser);
             db.SaveChanges();
             result = "Добавлен!";
@@ -315,7 +323,7 @@ public static class DataWorker
 
     #region UPDATE
 
-    public static string EditProduct(Product oldProduct, string newName, Category newCategory, Warehouse newWarehouse, int newCount, double newPrice, int newDiscount)
+    public static string EditProduct(Product oldProduct, string newName, Category newCategory, Warehouse newWarehouse, string newBarcode, string newWeight, int newCount, double newPrice, int newDiscount)
     {
         string result = "Такого товара не существует!";
         using ApplicationContext db = new();
@@ -323,6 +331,8 @@ public static class DataWorker
         product.Name = newName;
         product.CategoryId = newCategory.Id;
         product.WarehouseId = newWarehouse.Id;
+        product.Barcode = newBarcode;
+        product.Weight = newWeight;
         product.Count = newCount;
         product.Price = newPrice;
         product.Discount = newDiscount;
@@ -386,20 +396,67 @@ public static class DataWorker
         return result;
     }
 
-    public static string EditUser(User oldUser, string newName, string newSurname, string newPatronymic, string newEmail, string newPhone, string newLogin, string newPassword, Role newRole, Warehouse newWarehouse)
+    /*public static string EditUser(User oldUser, string newName, string newSurname, string newEmail, string newPhone, string newLogin, Role newRole = null, Warehouse newWarehouse = null, string newPatronymic = null, string newPassword = null)
     {
         string result = "Такого пользователя не существует!";
         using ApplicationContext db = new();
         User user = db.Users.FirstOrDefault(d => d.Id == oldUser.Id);
         user.Name = newName;
         user.Surname = newSurname;
-        user.Patronymic = newPatronymic;
+        if (newPatronymic != null)
+        {
+            user.Patronymic = newPatronymic;
+        }
         user.Email = newEmail;
         user.Phone = newPhone;
         user.Login = newLogin;
-        user.Password = Validation.CreateHash(newPassword);
-        user.RoleId = newRole.Id;
-        user.WarehouseId = newWarehouse.Id;
+        if (newPassword != null)
+        {
+            user.Password = Validation.CreateHash(newPassword);
+        }
+        if (newRole != null)
+        {
+            user.RoleId = newRole.Id;
+        }
+        else if (newRole.Name == "Администратор" && newWarehouse == null)
+        {
+            user.WarehouseId = null;
+        }
+        if (newWarehouse != null)
+        {
+            user.WarehouseId = newWarehouse.Id;
+        }
+        db.SaveChanges();
+        result = "Сделано! Пользователь " + user.Login + " изменён.";
+        return result;
+    }*/
+
+    public static string EditUser(User oldUser, string newName, string newSurname, string newEmail, string newPhone, string newLogin, Role newRole, Warehouse newWarehouse = null, string newPatronymic = null, string newPassword = null)
+    {
+        string result = "Такого пользователя не существует!";
+        using ApplicationContext db = new();
+        User user = db.Users.FirstOrDefault(d => d.Id == oldUser.Id);
+        user.Name = newName;
+        user.Surname = newSurname;
+        if (newPatronymic != null)
+        {
+            user.Patronymic = newPatronymic;
+        }
+        user.Email = newEmail;
+        user.Phone = newPhone;
+        user.Login = newLogin;
+        if (newPassword != null)
+        {
+            user.Password = Validation.CreateHash(newPassword);
+        }
+        if (newRole != null)
+        {
+            user.RoleId = newRole.Id;
+        }
+        if (newWarehouse != null)
+        {
+            user.WarehouseId = newWarehouse.Id;
+        }
         db.SaveChanges();
         result = "Сделано! Пользователь " + user.Login + " изменён.";
         return result;

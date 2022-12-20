@@ -18,8 +18,8 @@ namespace ManageGoodsApp.View
             DataManage.SupplierName = supplierToEdit.Name;
             DataManage.SupplierPhysicalAddress = supplierToEdit.PhysicalAddress;
             DataManage.SupplierLegalAddress = supplierToEdit.LegalAddress;
-            DataManage.SupplierPhone = supplierToEdit.Phone;
             DataManage.SupplierEmail = supplierToEdit.Email;
+            DataManage.SupplierPhone = supplierToEdit.Phone;
         }
 
         private void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

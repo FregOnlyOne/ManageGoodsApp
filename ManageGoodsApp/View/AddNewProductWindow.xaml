@@ -17,13 +17,14 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label FontSize="16" Content="Новый товар"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
-                    HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="FloralWhite"/>
+            <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Название"/>
             <TextBox Name="NameBlock"
                      Text="{Binding ProductName}"/>
@@ -42,7 +43,7 @@
             <TextBox Name="CountBlock" PreviewTextInput="PreviewTextInput"
                      Text="{Binding ProductCount}"/>
             <TextBlock Text="Цена"/>
-            <TextBox Name="PriceBlock" PreviewTextInput="PreviewTextInput"
+            <TextBox Name="PriceBlock" PreviewTextInput="PreviewPriceTextInput"
                      Text="{Binding ProductPrice}"/>
             <TextBlock Text="Скидка (%)"/>
             <TextBox Name="DiscountBlock" PreviewTextInput="PreviewTextInput"
