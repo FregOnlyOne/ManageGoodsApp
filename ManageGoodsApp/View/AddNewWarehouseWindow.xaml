@@ -31,7 +31,7 @@
                          Text="{Binding WarehouseAddress}"/>
                 <TextBlock Text="Телефон" FontSize="16"/>
                 <TextBox Name="PhoneBlock" FontSize="16"
-                         Style="{StaticResource PlaceholderTextBoxStyle}" Tag="89010010101"
+                         Style="{StaticResource PlaceholderTextBoxStyle}" Tag="8(901)-001-01-01"
                          PreviewTextInput="PreviewPhoneTextInput"
                          Text="{Binding WarehousePhone}"/>
             </StackPanel>
