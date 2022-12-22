@@ -125,7 +125,6 @@ public class DataManage : INotifyPropertyChanged
     public static string WarehouseName { get; set; }
     public static string WarehouseAddress { get; set; }
     public static string WarehousePhone { get; set; }
-    public static User WarehouseUser { get; set; }
 
     // Supplier properties
     public static string SupplierName { get; set; }
@@ -238,11 +237,11 @@ public class DataManage : INotifyPropertyChanged
                             SetDefaultBlockControl(wnd, "PriceBlock");
                         }
                         if (!Validation.IsNullString(ProductName) &&
-                                 ProductCategory != null &&
-                                 ProductWarehouse == null &&
-                                 !Validation.IsNullString(ProductBarcode) &&
-                                 !Validation.IsNullString(ProductWeight) &&
-                                 ProductPrice > 0)
+                            ProductCategory != null &&
+                            ProductWarehouse != null &&
+                            !Validation.IsNullString(ProductBarcode) &&
+                            !Validation.IsNullString(ProductWeight) &&
+                            ProductPrice > 0)
                         {
                             result = DataWorker.CreateProduct(ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
                             UpdateAllDataView();
@@ -266,6 +265,7 @@ public class DataManage : INotifyPropertyChanged
                             wnd.Close();
                         }
                         break;
+                    
                     case "AddNewWarehouseWnd":
                         if (Validation.IsNullString(WarehouseName))
                         {
@@ -307,6 +307,7 @@ public class DataManage : INotifyPropertyChanged
                             wnd.Close();
                         }
                         break;
+                    
                     case "AddNewSupplierWnd":
                         if (Validation.IsNullString(SupplierName))
                         {
@@ -374,6 +375,7 @@ public class DataManage : INotifyPropertyChanged
                             wnd.Close();
                         }
                         break;
+                    
                     case "AddNewSupplyWnd":
                         if (SupplyProduct == null)
                         {
@@ -400,6 +402,7 @@ public class DataManage : INotifyPropertyChanged
                             wnd.Close();
                         }
                         break;
+                    
                     case "AddNewUserWnd":
                         if (Validation.IsNullString(UserName))
                         {
@@ -481,6 +484,7 @@ public class DataManage : INotifyPropertyChanged
                             wnd.Close();
                         }
                         break;
+                    
                     case "AddNewRoleWnd":
                         if (Validation.IsNullString(RoleName))
                         {
@@ -1073,7 +1077,6 @@ public class DataManage : INotifyPropertyChanged
         WarehouseName = null;
         WarehouseAddress = null;
         WarehousePhone = null;
-        WarehouseUser = null;
 
         // Supplier properties
         SupplierName = null;

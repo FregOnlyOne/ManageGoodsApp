@@ -5,53 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Редактирование товара" Height="300" Width="500"
+        Title="Редактирование товара" Height="475" Width="850"
         ResizeMode="NoResize" Name="EditProductWnd">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Редактирование товара"/>
+                <Label FontSize="22" Content="Редактирование товара"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="FloralWhite"/>
+        <StackPanel Grid.Row="1" Grid.Column="0"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Название"/>
-            <TextBox Text="{Binding ProductName}"/>
-            <TextBlock Text="Категория"/>
+            <TextBlock Text="Название" FontSize="16"/>
+            <TextBox Name="NameBlock" FontSize="16"
+                     Margin="0 0 0 10"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="(название товара) (код товара) (цвет)"
+                     Text="{Binding ProductName}"/>
+            <TextBlock Text="Категория" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllCategories}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16"
+                      Margin="0 0 0 10"
                       SelectedItem="{Binding ProductCategory}"/>
-            <TextBlock Text="Склад"/>
+            <TextBlock Text="Склад" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllWarehouses}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16"
+                      Margin="0 0 0 10"
                       SelectedItem="{Binding ProductWarehouse}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1"  Width="200" Orientation="Vertical"
+            <TextBlock Text="Штрихкод (EAN)" FontSize="16"/>
+            <TextBox Name="BarcodeBlock" FontSize="16"
+                     PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="5 901234 123457"
+                     Text="{Binding ProductBarcode}"/>
+            </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Количество"/>
-            <TextBox PreviewTextInput="PreviewTextInput"
+            <TextBlock Text="Вес (г)" FontSize="16"/>
+            <TextBox Name="WeightBlock" FontSize="16"
+                     Margin="0 0 0 10"
+                     PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="27500"
+                     Text="{Binding ProductWeight}"/>
+            <TextBlock Text="Количество" FontSize="16"/>
+            <TextBox Name="CountBlock" FontSize="16"
+                     Margin="0 0 0 10"
+                     PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="15"
                      Text="{Binding ProductCount}"/>
-            <TextBlock Text="Цена"/>
-            <TextBox PreviewTextInput="PreviewTextInput"
+            <TextBlock Text="Цена" FontSize="16"/>
+            <TextBox Name="PriceBlock" FontSize="16"
+                     Margin="0 0 0 10" 
+                     PreviewTextInput="PreviewPriceTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="14999"
                      Text="{Binding ProductPrice}"/>
-            <TextBlock Text="Скидка (%)"/>
-            <TextBox PreviewTextInput="PreviewTextInput"
-                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="По умолчанию 0%"
+            <TextBlock Text="Скидка (%)" FontSize="16"/>
+            <TextBox Name="DiscountBlock" FontSize="16"
+                     PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="По умолчанию 0"
                      Text="{Binding ProductDiscount}"/>
         </StackPanel>
         <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Изменить"
-                        Command="{Binding EditItem}"
+                        Command="{Binding EditItem}" FontSize="18"
                         CommandParameter="{Binding ElementName=EditProductWnd}"/>
             </StackPanel>
         </Border>

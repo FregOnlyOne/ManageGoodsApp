@@ -25,9 +25,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllProducts" ItemsSource="{Binding AllProducts}"
@@ -35,23 +35,27 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Номер"
-                                            DisplayMemberBinding="{Binding Path=Id}"/>
+                                                DisplayMemberBinding="{Binding Path=Id}"/>
                                 <GridViewColumn Header="Название"
-                                            DisplayMemberBinding="{Binding Path=Name}"/>
+                                                DisplayMemberBinding="{Binding Path=Name}"/>
                                 <GridViewColumn Header="Категория"
-                                            DisplayMemberBinding="{Binding Path=ProductCategory.Name}"/>
+                                                DisplayMemberBinding="{Binding Path=ProductCategory.Name}"/>
                                 <GridViewColumn Header="Склад"
-                                            DisplayMemberBinding="{Binding Path=ProductWarehouse.Name}"/>
+                                                DisplayMemberBinding="{Binding Path=ProductWarehouse.Name}"/>
+                                <GridViewColumn Header="Штрихкод"
+                                                DisplayMemberBinding="{Binding Path=Barcode}"/>
+                                <GridViewColumn Header="Вес"
+                                                DisplayMemberBinding="{Binding Path=Weight}"/>
                                 <GridViewColumn Header="Количество"
-                                            DisplayMemberBinding="{Binding Path=Count}"/>
+                                                DisplayMemberBinding="{Binding Path=Count}"/>
                                 <GridViewColumn Header="Цена"
-                                            DisplayMemberBinding="{Binding Path=Price}"/>
+                                                DisplayMemberBinding="{Binding Path=Price}"/>
                                 <GridViewColumn Header="Скидка"
-                                            DisplayMemberBinding="{Binding Path=Discount}"/>
+                                                DisplayMemberBinding="{Binding Path=Discount}"/>
                                 <GridViewColumn Header="Цена по скидке"
-                                            DisplayMemberBinding="{Binding Path=DiscountPrice}"/>
+                                                DisplayMemberBinding="{Binding Path=DiscountPrice}"/>
                                 <GridViewColumn Header="Суммарная стоимость"
-                                            DisplayMemberBinding="{Binding Path=TotalCost}"/>
+                                                DisplayMemberBinding="{Binding Path=TotalCost}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -62,9 +66,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllCategories" ItemsSource="{Binding AllCategories}"
@@ -85,9 +89,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllWarehouses" ItemsSource="{Binding AllWarehouses}"
@@ -112,9 +116,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllSuppliers" ItemsSource="{Binding AllSuppliers}"
@@ -145,9 +149,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllSupplies" ItemsSource="{Binding AllSupplies}"
@@ -180,9 +184,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllUsers" ItemsSource="{Binding AllUsers}"
@@ -215,9 +219,9 @@
                     </TabItem.Header>
                     <TabItem.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}"/>
-                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}"/>
-                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}"/>
+                            <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
+                            <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
+                            <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
                         </ContextMenu>
                     </TabItem.ContextMenu>
                     <ListView x:Name="ViewAllRoles" ItemsSource="{Binding AllRoles}"

@@ -11,7 +11,7 @@ public static class DataWorker
 {
     #region CREATE
 
-    public static string CreateProduct(string name, Category category, Warehouse warehouse, string barcode, string weight, int count, double price, int discount)
+    public static string CreateProduct(string name, Category category, Warehouse warehouse, string barcode, string weight, int count, double price, int discount = 0)
     {
         string result = "Уже существует!";
         using ApplicationContext db = new();

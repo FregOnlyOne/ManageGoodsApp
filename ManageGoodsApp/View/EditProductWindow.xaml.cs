@@ -26,5 +26,11 @@ namespace ManageGoodsApp.View
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+        
+        private void PreviewPriceTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9^.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
     }
 }
