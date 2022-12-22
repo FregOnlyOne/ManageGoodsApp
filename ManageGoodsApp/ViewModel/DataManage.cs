@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows;
 using ManageGoodsApp.Model;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Validation = ManageGoodsApp.Model.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
@@ -181,7 +182,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return addItem ?? new RelayCommand(obj =>
+            return addItem = new RelayCommand(obj =>
             {
                 Window wnd = obj as Window;
                 string result = "";
@@ -198,11 +199,11 @@ public class DataManage : INotifyPropertyChanged
                         }
                         if (ProductCategory == null)
                         {
-                            MessageBox.Show("”Í‡ÊËÚÂ Í‡ÚÂ„ÓË˛!");
+                            MessageBox.Show("–£–∫–∞–∂–∏—Ç–µ –∫–∞—Ç–µ–≥–æ—Ä–∏—é!");
                         }
                         if (ProductWarehouse == null)
                         {
-                            MessageBox.Show("”Í‡ÊËÚÂ ÒÍÎ‡‰!");
+                            MessageBox.Show("–£–∫–∞–∂–∏—Ç–µ —Å–∫–ª–∞–¥!");
                         }
                         if (Validation.IsNullString(ProductBarcode))
                         {
@@ -376,7 +377,7 @@ public class DataManage : INotifyPropertyChanged
                     case "AddNewSupplyWnd":
                         if (SupplyProduct == null)
                         {
-                            MessageBox.Show("”Í‡ÊËÚÂ ÚÓ‚‡!");
+                            MessageBox.Show("–£–∫–∞–∂–∏—Ç–µ —Ç–æ–≤–∞—Ä!");
                         }
                         if (SupplyCount == 0)
                         {
@@ -388,7 +389,7 @@ public class DataManage : INotifyPropertyChanged
                         }
                         if (SupplyWarehouse == null)
                         {
-                            MessageBox.Show("”Í‡ÊËÚÂ ÒÍÎ‡‰!");
+                            MessageBox.Show("–£–∫–∞–∂–∏—Ç–µ —Å–∫–ª–∞–¥!");
                         }
                         else if (SupplyProduct != null && SupplyCount > 0)
                         {
@@ -420,9 +421,13 @@ public class DataManage : INotifyPropertyChanged
                         {
                             SetRedBlockControl(wnd, "EmailBlock");
                         }
-                        else
+                        else if (Validation.IsValidEmail(UserEmail))
                         {
                             SetDefaultBlockControl(wnd, "EmailBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
                         }
                         if (Validation.IsNullString(UserPhone))
                         {
@@ -454,19 +459,20 @@ public class DataManage : INotifyPropertyChanged
                         }
                         if (UserRole == null)
                         {
-                            MessageBox.Show("”Í‡ÊËÚÂ ÓÎ¸!");
+                            result = "–£–∫–∞–∂–∏—Ç–µ —Ä–æ–ª—å!";
+                            ShowMessageToUser(result);
                         }
-                        else if (UserWarehouse == null && UserRole.Name != "¿‰ÏËÌËÒÚ‡ÚÓ")
+                        else if (UserWarehouse == null && UserRole.Name != "–ê–¥–º–∏–Ω–∏—Å—Ç—Ä–∞—Ç–æ—Ä")
                         {
-                            MessageBox.Show("”Í‡ÊËÚÂ ÒÍÎ‡‰!");
+                            result = "–£–∫–∞–∂–∏—Ç–µ —Å–∫–ª–∞–¥!";
+                            ShowMessageToUser(result);
                         }
                         else if (!Validation.IsNullString(UserName) &&
                                  !Validation.IsNullString(UserSurname) &&
-                                 !Validation.IsNullString(UserEmail) &&
-                                 !Validation.IsNullString(UserPhone) &&
+                                 !Validation.IsNullString(UserEmail) && Validation.IsValidEmail(UserEmail) &&
+                                 !Validation.IsNullString(UserPhone) && Validation.IsPhoneNumber(UserPhone) &&
                                  !Validation.IsNullString(UserLogin) &&
-                                 !Validation.IsNullString(UserPassword) &&
-                                 UserRole != null)
+                                 !Validation.IsNullString(UserPassword))
                         {
                             result = DataWorker.CreateUser(UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserPassword, UserRole, UserWarehouse, UserPatronymic);
                             UpdateAllDataView();
@@ -503,120 +509,173 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return editItem ?? new RelayCommand(obj =>
+            return editItem = new RelayCommand(obj =>
             {
                 Window wnd = obj as Window;
                 if (wnd.Name == "EditProductWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì ÚÓ‚‡!";
-                    if (SelectedTabItem.Name == "ProductsTabItem" && SelectedProduct != null)
-                    {
-                        result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
-                    }
+                    string result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
+                    UpdateAllDataView();
+                    SetNullValuesToProperties();
+                    ShowMessageToUser(result);
+                    wnd.Close();
                 }
                 if (wnd.Name == "EditCategoryWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì‡ Í‡ÚÂ„ÓËˇ!";
-                    if (SelectedCategory != null)
-                    {
-                        result = DataWorker.EditCategory(SelectedCategory, CategoryName);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
-                    }
+                    string result = DataWorker.EditCategory(SelectedCategory, CategoryName);
+                    UpdateAllDataView();
+                    SetNullValuesToProperties();
+                    ShowMessageToUser(result);
+                    wnd.Close();
                 }
                 if (wnd.Name == "EditWarehouseWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì ÒÍÎ‡‰!";
-                    if (SelectedWarehouse != null)
+                    if (Validation.IsNullString(WarehouseName))
                     {
-                        result = DataWorker.EditWarehouse(SelectedWarehouse, WarehouseName, WarehouseAddress, WarehousePhone);
+                        SetRedBlockControl(wnd, "NameBlock");
+                    }
+                    else
+                    {
+                        SetDefaultBlockControl(wnd, "NameBlock");
+                    }
+                    if (Validation.IsNullString(WarehouseAddress))
+                    {
+                        SetRedBlockControl(wnd, "AddressBlock");
+                    }
+                    else
+                    {
+                        SetDefaultBlockControl(wnd, "AddressBlock");
+                    }
+                    if (Validation.IsNullString(WarehousePhone))
+                    {
+                        SetRedBlockControl(wnd, "PhoneBlock");
+                    }
+                    else if (Validation.IsPhoneNumber(WarehousePhone))
+                    {
+                        SetDefaultBlockControl(wnd, "PhoneBlock");
+                    }
+                    else
+                    {
+                        SetRedBlockControl(wnd, "PhoneBlock");
+                    }
+                    if (!Validation.IsNullString(WarehouseName) &&
+                        !Validation.IsNullString(WarehouseAddress) &&
+                        !Validation.IsNullString(WarehousePhone) &&
+                        Validation.IsPhoneNumber(WarehousePhone))
+                    {
+                        string result = DataWorker.EditWarehouse(SelectedWarehouse, WarehouseName, WarehouseAddress, WarehousePhone);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
                         wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
                     }
                 }
                 if (wnd.Name == "EditSupplierWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì ÔÓÒÚ‡‚˘ËÍ!";
-                    if (SelectedSupplier != null)
-                    {
-                        result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
-                    }
+                    string result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
+                    UpdateAllDataView();
+                    SetNullValuesToProperties();
+                    ShowMessageToUser(result);
+                    wnd.Close();
                 }
                 if (wnd.Name == "EditSupplyWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì‡ ÔÓÒÚ‡‚Í‡!";
-                    if (SelectedSupply != null)
-                    {
-                        result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
-                    }
+                    string result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
+                    UpdateAllDataView();
+                    SetNullValuesToProperties();
+                    ShowMessageToUser(result);
+                    wnd.Close();
                 }
                 if (wnd.Name == "EditUserWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì ÔÓÎ¸ÁÓ‚‡ÚÂÎ¸!";
-                    if (SelectedUser != null)
+                    if (Validation.IsNullString(UserName))
                     {
-                        result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
+                        SetRedBlockControl(wnd, "NameBlock");
+                    }
+                    else
+                    {
+                        SetDefaultBlockControl(wnd, "NameBlock");
+                    }
+                    if (Validation.IsNullString(UserSurname))
+                    {
+                        SetRedBlockControl(wnd, "SurnameBlock");
+                    }
+                    else
+                    {
+                        SetDefaultBlockControl(wnd, "SurnameBlock");
+                    }
+                    if (Validation.IsNullString(UserEmail))
+                    {
+                        SetRedBlockControl(wnd, "EmailBlock");
+                    }
+                    else if (Validation.IsValidEmail(UserEmail))
+                    {
+                        SetDefaultBlockControl(wnd, "EmailBlock");
+                    }
+                    else
+                    {
+                        SetRedBlockControl(wnd, "EmailBlock");
+                    }
+                    if (Validation.IsNullString(UserPhone))
+                    {
+                        SetRedBlockControl(wnd, "PhoneBlock");
+                    }
+                    else if (Validation.IsPhoneNumber(UserPhone))
+                    {
+                        SetDefaultBlockControl(wnd, "PhoneBlock");
+                    }
+                    else
+                    {
+                        SetRedBlockControl(wnd, "PhoneBlock");
+                    }
+                    if (Validation.IsNullString(UserLogin))
+                    {
+                        SetRedBlockControl(wnd, "LoginBlock");
+                    }
+                    else
+                    {
+                        SetDefaultBlockControl(wnd, "LoginBlock");
+                    }
+                    if (UserRole != null)
+                    {
+                        if (UserRole.Name != "–ê–¥–º–∏–Ω–∏—Å—Ç—Ä–∞—Ç–æ—Ä" && UserWarehouse == null)
+                        {
+                            string result = "–£–∫–∞–∂–∏—Ç–µ —Å–∫–ª–∞–¥!";
+                            ShowMessageToUser(result);
+                        }
+                        else if (!Validation.IsNullString(UserName) &&
+                                 !Validation.IsNullString(UserSurname) &&
+                                 !Validation.IsNullString(UserEmail) && Validation.IsValidEmail(UserEmail) &&
+                                 !Validation.IsNullString(UserPhone) && Validation.IsPhoneNumber(UserPhone) &&
+                                 !Validation.IsNullString(UserLogin))
+                        {
+                            string result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(result);
+                            wnd.Close();
+                        }
+                    }
+                    else if (!Validation.IsNullString(UserName) &&
+                             !Validation.IsNullString(UserSurname) &&
+                             !Validation.IsNullString(UserEmail) && Validation.IsValidEmail(UserEmail) &&
+                             !Validation.IsNullString(UserPhone) && Validation.IsPhoneNumber(UserPhone) &&
+                             !Validation.IsNullString(UserLogin))
+                    {
+                        string result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
                         wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
                     }
                 }
                 if (wnd.Name == "EditRoleWnd")
                 {
-                    string result = "ÕÂ ‚˚·‡Ì‡ ÓÎ¸!";
-                    if (SelectedRole != null)
-                    {
-                        result = DataWorker.EditRole(SelectedRole, RoleName);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
-                    }
-                    else
-                    {
-                        ShowMessageToUser(result);
-                    }
+                    string result = DataWorker.EditRole(SelectedRole, RoleName);
+                    UpdateAllDataView();
+                    SetNullValuesToProperties();
+                    ShowMessageToUser(result);
+                    wnd.Close();
                 }
             });
         }
@@ -631,9 +690,9 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return deleteItem ?? new RelayCommand(obj =>
+            return deleteItem = new RelayCommand(obj =>
             {
-                string result = "ÕË˜Â„Ó ÌÂ ‚˚·‡ÌÓ!";
+                string result = "–ù–∏—á–µ–≥–æ –Ω–µ –≤—ã–±—Ä–∞–Ω–æ!";
                 if (SelectedTabItem.Name == "ProductsTabItem" && SelectedProduct != null)
                 {
                     result = DataWorker.DeleteProduct(SelectedProduct);
@@ -684,7 +743,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewProductWnd ?? new RelayCommand(obj =>
+            return openAddNewProductWnd = new RelayCommand(obj =>
             {
                 OpenAddProductWindowsMethod();
             });
@@ -696,7 +755,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewCategoryWnd ?? new RelayCommand(obj =>
+            return openAddNewCategoryWnd = new RelayCommand(obj =>
             {
                 OpenAddCategoryWindowsMethod();
             });
@@ -708,7 +767,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewWarehouseWnd ?? new RelayCommand(obj =>
+            return openAddNewWarehouseWnd = new RelayCommand(obj =>
             {
                 OpenAddWarehouseWindowsMethod();
             });
@@ -720,7 +779,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewSupplierWnd ?? new RelayCommand(obj =>
+            return openAddNewSupplierWnd = new RelayCommand(obj =>
             {
                 OpenAddSupplierWindowsMethod();
             });
@@ -732,7 +791,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewSupplyWnd ?? new RelayCommand(obj =>
+            return openAddNewSupplyWnd = new RelayCommand(obj =>
             {
                 OpenAddSupplyWindowsMethod();
             });
@@ -744,7 +803,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewUserWnd ?? new RelayCommand(obj =>
+            return openAddNewUserWnd = new RelayCommand(obj =>
             {
                 OpenAddUserWindowsMethod();
             });
@@ -756,7 +815,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddNewRoleWnd ?? new RelayCommand(obj =>
+            return openAddNewRoleWnd = new RelayCommand(obj =>
             {
                 OpenAddRoleWindowsMethod();
             });
@@ -768,7 +827,7 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openAddItem ?? new RelayCommand(obj =>
+            return openAddItem = new RelayCommand(obj =>
             {
                 if (SelectedTabItem.Name == "ProductsTabItem")
                 {
@@ -807,35 +866,70 @@ public class DataManage : INotifyPropertyChanged
     {
         get
         {
-            return openEditItem ?? new RelayCommand(obj =>
+            return openEditItem = new RelayCommand(obj =>
             {
                 if (SelectedTabItem.Name == "ProductsTabItem" && SelectedProduct != null)
                 {
                     OpenEditProductWindowsMethod(SelectedProduct);
                 }
+                else if (SelectedTabItem.Name == "ProductsTabItem" && SelectedProduct == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω —Ç–æ–≤–∞—Ä!";
+                    ShowMessageToUser(result);
+                }
                 if (SelectedTabItem.Name == "CategoriesTabItem" && SelectedCategory != null)
                 {
                     OpenEditCategoryWindowsMethod(SelectedCategory);
                 }
-                if (SelectedTabItem.Name == "WarehousesTabItem" && SelectedWarehouse != null )
+                else if (SelectedTabItem.Name == "CategoriesTabItem" && SelectedCategory == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω–∞ –∫–∞—Ç–µ–≥–æ—Ä–∏—è!";
+                    ShowMessageToUser(result);
+                }
+                if (SelectedTabItem.Name == "WarehousesTabItem" && SelectedWarehouse != null)
                 {
                     OpenEditWarehouseWindowsMethod(SelectedWarehouse);
+                }
+                else if (SelectedTabItem.Name == "WarehousesTabItem" && SelectedWarehouse == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω —Å–∫–ª–∞–¥!";
+                    ShowMessageToUser(result);
                 }
                 if (SelectedTabItem.Name == "SuppliersTabItem" && SelectedSupplier != null)
                 {
                     OpenEditSupplierWindowsMethod(SelectedSupplier);
                 }
-                if (SelectedTabItem.Name == "SupplyTabItem" && SelectedSupply != null)
+                else if (SelectedTabItem.Name == "SuppliersTabItem" && SelectedSupplier == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω –ø–æ—Å—Ç–∞–≤—â–∏–∫!";
+                    ShowMessageToUser(result);
+                }
+                if (SelectedTabItem.Name == "SuppliesTabItem" && SelectedSupply != null)
                 {
                     OpenEditSupplyWindowsMethod(SelectedSupply);
+                }
+                else if (SelectedTabItem.Name == "SuppliesTabItem" && SelectedSupply == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω–∞ –ø–æ—Å—Ç–∞–≤–∫–∞!";
+                    ShowMessageToUser(result);
                 }
                 if (SelectedTabItem.Name == "UsersTabItem" && SelectedUser != null)
                 {
                     OpenEditUserWindowsMethod(SelectedUser);
                 }
+                else if (SelectedTabItem.Name == "UsersTabItem" && SelectedUser == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—å!";
+                    ShowMessageToUser(result);
+                }
                 if (SelectedTabItem.Name == "RolesTabItem" && SelectedRole != null)
                 {
                     OpenEditRoleWindowsMethod(SelectedRole);
+                }
+                else if (SelectedTabItem.Name == "RolesTabItem" && SelectedRole == null)
+                {
+                    string result = "–ù–µ –≤—ã–±—Ä–∞–Ω–∞ —Ä–æ–ª—å!";
+                    ShowMessageToUser(result);
                 }
             });
         }
@@ -966,6 +1060,8 @@ public class DataManage : INotifyPropertyChanged
         ProductName = null;
         ProductCategory = null;
         ProductWarehouse = null;
+        ProductBarcode = null;
+        ProductWeight = null;
         ProductCount = 0;
         ProductPrice = 0;
         ProductDiscount = 0;

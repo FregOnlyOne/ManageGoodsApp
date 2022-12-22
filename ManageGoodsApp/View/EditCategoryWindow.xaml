@@ -5,28 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Редактирование категории" Height="250" Width="300"
+        Title="Редактирование категории" Height="350" Width="500"
         ResizeMode="NoResize" Name="EditCategoryWnd">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Редактирование категории"/>
+                <Label FontSize="22" Content="Редактирование категории"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Width="200" Orientation="Vertical"
-                    HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Название"/>
-            <TextBox Text="{Binding CategoryName}"/>
-        </StackPanel>
+        <Border Grid.Row="1" Background="FloralWhite">
+            <StackPanel Width="350" Orientation="Vertical"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Название" FontSize="16"/>
+                <TextBox Name="NameBlock" FontSize="16"
+                         Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Бытовая техника"
+                         Text="{Binding CategoryName}"/>
+            </StackPanel>
+        </Border>
         <Border Grid.Row="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Изменить"
-                        Command="{Binding EditItem}"
+                        Command="{Binding EditItem}" FontSize="18"
                         CommandParameter="{Binding ElementName=EditCategoryWnd}"/>
             </StackPanel>
         </Border>

@@ -36,7 +36,7 @@
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Петров"
                      Text="{Binding UserSurname}"/>
             <TextBlock Text="Отчество" FontSize="16"/>
-            <TextBox Name="PatronymicBlock" FontSize="16"
+            <TextBox FontSize="16"
                      Margin="0 0 0 10"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Сидорович"
                      Text="{Binding UserPatronymic}"/>
@@ -48,7 +48,7 @@
             <TextBlock Text="Телефон" FontSize="16"/>
             <TextBox Name="PhoneBlock" FontSize="16"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="8(901)-001-01-01"
-                     PreviewTextInput="PreviewTextInput"
+                     PreviewTextInput="PreviewPhoneTextInput"
                      Text="{Binding UserPhone}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1"  Width="350" Orientation="Vertical"

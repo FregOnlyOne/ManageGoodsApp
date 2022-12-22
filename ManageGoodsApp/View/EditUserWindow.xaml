@@ -26,11 +26,11 @@
         <StackPanel Grid.Row="1" Grid.Column="0"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Имя" FontSize="16"/>
-            <TextBox FontSize="16" Margin="0 0 0 10"
+            <TextBox Name="NameBlock" FontSize="16" Margin="0 0 0 10"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Иван"
                      Text="{Binding UserName}"/>
             <TextBlock Text="Фамилия" FontSize="16"/>
-            <TextBox FontSize="16" Margin="0 0 0 10"
+            <TextBox Name="SurnameBlock" FontSize="16" Margin="0 0 0 10"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Петров"
                      Text="{Binding UserSurname}"/>
             <TextBlock Text="Отчество" FontSize="16"/>
@@ -38,19 +38,19 @@
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Сидорович"
                      Text="{Binding UserPatronymic}"/>
             <TextBlock Text="Электронная почта" FontSize="16"/>
-            <TextBox FontSize="16" Margin="0 0 0 10"
+            <TextBox Name="EmailBlock" FontSize="16" Margin="0 0 0 10"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="ivanpetrov@mail.ru"
                      Text="{Binding UserEmail}"/>
             <TextBlock Text="Телефон" FontSize="16"/>
-            <TextBox FontSize="16"
+            <TextBox Name="PhoneBlock" FontSize="16"
                      Style="{StaticResource PlaceholderTextBoxStyle}" Tag="8(901)-001-01-01"
-                     PreviewTextInput="PreviewTextInput"
+                     PreviewTextInput="PreviewPhoneTextInput"
                      Text="{Binding UserPhone}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Логин" FontSize="16"/>
-            <TextBox FontSize="16" Margin="0 0 0 10"
+            <TextBox Name="LoginBlock" FontSize="16" Margin="0 0 0 10"
                      Text="{Binding UserLogin}"/>
             <TextBlock Text="Пароль" FontSize="16"/>
             <PasswordBox FontSize="16" Margin="0 0 0 10"

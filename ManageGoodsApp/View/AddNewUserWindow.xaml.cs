@@ -22,10 +22,9 @@ namespace ManageGoodsApp.View
             { DataManage.UserPassword = ((PasswordBox)sender).Password; }
         }
 
-        private void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void PreviewPhoneTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9^(^)^+^-]+");
         }
     }
 }

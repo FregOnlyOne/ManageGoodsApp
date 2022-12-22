@@ -5,18 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Сообщение" Height="120" Width="250"
+        Title="Сообщение" Height="180" Width="320"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="MessageText"  Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   TextWrapping="Wrap">
-        </TextBlock>
-        <Button Grid.Row="1" Content="ОК" Click="Button_Click"/>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="MessageText" FontSize="18" Padding="10 0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
+        <Border Grid.Row="1" Background="#FF6D6D6D">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="ОК" Height="25" Padding="20 0" FontSize="16"
+                        Click="Button_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

@@ -13,7 +13,7 @@ public static class DataWorker
 
     public static string CreateProduct(string name, Category category, Warehouse warehouse, string barcode, string weight, int count, double price, int discount)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         bool checkIsExist = db.Products.Any(el => el.Name == name);
@@ -32,14 +32,14 @@ public static class DataWorker
             };
             db.Products.Add(newProduct);
             db.SaveChanges();
-            result = "Добавлен!";
+            result = "Р”РѕР±Р°РІР»РµРЅ!";
         }
         return result;
     }
 
     public static string CreateCategory(string name)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         bool checkIsExist = db.Categories.Any(el => el.Name == name);
@@ -51,14 +51,14 @@ public static class DataWorker
             };
             db.Categories.Add(newCategory);
             db.SaveChanges();
-            result = "Добавлена!";
+            result = "Р”РѕР±Р°РІР»РµРЅР°!";
         }
         return result;
     }
 
     public static string CreateWarehouse(string name, string address, string phone)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         bool checkIsExist = db.Warehouses.Any(el => el.Name == name);
@@ -72,14 +72,14 @@ public static class DataWorker
             };
             db.Warehouses.Add(newWarehouse);
             db.SaveChanges();
-            result = "Добавлен!";
+            result = "Р”РѕР±Р°РІР»РµРЅ!";
         }
         return result;
     }
 
     public static string CreateSupplier(string name, string physicalAddress, string legalAddress, string taxIdentificationNumber, string phone, string email)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         bool checkIsExist = db.Suppliers.Any(el => el.Name == name && el.TaxIdentificationNumber == taxIdentificationNumber);
@@ -96,14 +96,14 @@ public static class DataWorker
             };
             db.Suppliers.Add(newSupplier);
             db.SaveChanges();
-            result = "Добавлен!";
+            result = "Р”РѕР±Р°РІР»РµРЅ!";
         }
         return result;
     }
 
     public static string CreateSupply(Product product, int count, Warehouse warehouse, DateTime? arrivalDate = null)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         DateTime currentDate = DateTime.Today;
@@ -120,14 +120,14 @@ public static class DataWorker
             };
             db.Supplies.Add(newSupply);
             db.SaveChanges();
-            result = "Добавлена!";
+            result = "Р”РѕР±Р°РІР»РµРЅР°!";
         }
         return result;
     }
 
     public static string CreateUser(string name, string surname, string email, string phone, string login, string password, Role role, Warehouse warehouse = null, string patronymic = null)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         bool checkIsExist = db.Users.Any(el => el.Email == email && el.Phone == phone && el.Login == login);
@@ -153,14 +153,14 @@ public static class DataWorker
             }
             db.Users.Add(newUser);
             db.SaveChanges();
-            result = "Добавлен!";
+            result = "Р”РѕР±Р°РІР»РµРЅ!";
         }
         return result;
     }
 
     public static string CreateRole(string name)
     {
-        string result = "Уже существует!";
+        string result = "РЈР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         // Check exist
         bool checkIsExist = db.Roles.Any(el => el.Name == name);
@@ -172,7 +172,7 @@ public static class DataWorker
             };
             db.Roles.Add(newRole);
             db.SaveChanges();
-            result = "Добавлена!";
+            result = "Р”РѕР±Р°РІР»РµРЅР°!";
         }
         return result;
     }
@@ -325,7 +325,7 @@ public static class DataWorker
 
     public static string EditProduct(Product oldProduct, string newName, Category newCategory, Warehouse newWarehouse, string newBarcode, string newWeight, int newCount, double newPrice, int newDiscount)
     {
-        string result = "Такого товара не существует!";
+        string result = "РўР°РєРѕРіРѕ С‚РѕРІР°СЂР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         Product product = db.Products.FirstOrDefault(d => d.Id == oldProduct.Id);
         product.Name = newName;
@@ -337,37 +337,37 @@ public static class DataWorker
         product.Price = newPrice;
         product.Discount = newDiscount;
         db.SaveChanges();
-        result = "Сделано! Товар " + product.Name + " изменён.";
+        result = "РЎРґРµР»Р°РЅРѕ! РўРѕРІР°СЂ " + product.Name + " РёР·РјРµРЅС‘РЅ.";
         return result;
     }
 
     public static string EditCategory(Category oldCategory, string newName)
     {
-        string result = "Такой категории не существует!";
+        string result = "РўР°РєРѕР№ РєР°С‚РµРіРѕСЂРёРё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         Category category = db.Categories.FirstOrDefault(d => d.Id == oldCategory.Id);
         category.Name = newName;
         db.SaveChanges();
-        result = "Сделано! Категория " + category.Name + " изменена.";
+        result = "РЎРґРµР»Р°РЅРѕ! РљР°С‚РµРіРѕСЂРёСЏ РёР·РјРµРЅРµРЅР° РЅР° " + category.Name + ".";
         return result;
     }
 
     public static string EditWarehouse(Warehouse oldWarehouse, string newName, string newAddress, string newPhone)
     {
-        string result = "Такого склада не существует!";
+        string result = "РўР°РєРѕРіРѕ СЃРєР»Р°РґР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         Warehouse warehouse = db.Warehouses.FirstOrDefault(d => d.Id == oldWarehouse.Id);
         warehouse.Name = newName;
         warehouse.Address = newAddress;
         warehouse.Phone = newPhone;
         db.SaveChanges();
-        result = "Сделано! Склад " + warehouse.Name + " изменён.";
+        result = "РЎРґРµР»Р°РЅРѕ! РЎРєР»Р°Рґ " + warehouse.Name + " РёР·РјРµРЅС‘РЅ.";
         return result;
     }
 
     public static string EditSupplier(Supplier oldSupplier, string newName, string newPhysicalAddress, string newLegalAddress, string newTaxIdentificationNumber, string newPhone, string newEmail)
     {
-        string result = "Такого поставщика не существует!";
+        string result = "РўР°РєРѕРіРѕ РїРѕСЃС‚Р°РІС‰РёРєР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         Supplier supplier = db.Suppliers.FirstOrDefault(d => d.Id == oldSupplier.Id);
         supplier.Name = newName;
@@ -377,13 +377,13 @@ public static class DataWorker
         supplier.Phone = newPhone;
         supplier.Email = newEmail;
         db.SaveChanges();
-        result = "Сделано! Поставщик " + supplier.Name + " изменён.";
+        result = "РЎРґРµР»Р°РЅРѕ! РџРѕСЃС‚Р°РІС‰РёРє " + supplier.Name + " РёР·РјРµРЅС‘РЅ.";
         return result;
     }
 
     public static string EditSupply(Supply oldSupply, Product newProduct, int newCount, Warehouse newWarehouse, DateTime? newDepartureDate, DateTime? newArrivalDate = null)
     {
-        string result = "Такой поставки не существует!";
+        string result = "РўР°РєРѕР№ РїРѕСЃС‚Р°РІРєРё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         Supply supply = db.Supplies.FirstOrDefault(d => d.Id == oldSupply.Id);
         supply.ProductId = newProduct.Id;
@@ -392,48 +392,13 @@ public static class DataWorker
         supply.DepartureDate = newDepartureDate;
         supply.ArrivalDate = newArrivalDate;
         db.SaveChanges();
-        result = "Сделано! Поставка " + supply.Id + " изменена.";
+        result = "РЎРґРµР»Р°РЅРѕ! РџРѕСЃС‚Р°РІРєР° РЅРѕРјРµСЂ " + supply.Id + " РёР·РјРµРЅРµРЅР°.";
         return result;
     }
-
-    /*public static string EditUser(User oldUser, string newName, string newSurname, string newEmail, string newPhone, string newLogin, Role newRole = null, Warehouse newWarehouse = null, string newPatronymic = null, string newPassword = null)
-    {
-        string result = "Такого пользователя не существует!";
-        using ApplicationContext db = new();
-        User user = db.Users.FirstOrDefault(d => d.Id == oldUser.Id);
-        user.Name = newName;
-        user.Surname = newSurname;
-        if (newPatronymic != null)
-        {
-            user.Patronymic = newPatronymic;
-        }
-        user.Email = newEmail;
-        user.Phone = newPhone;
-        user.Login = newLogin;
-        if (newPassword != null)
-        {
-            user.Password = Validation.CreateHash(newPassword);
-        }
-        if (newRole != null)
-        {
-            user.RoleId = newRole.Id;
-        }
-        else if (newRole.Name == "Администратор" && newWarehouse == null)
-        {
-            user.WarehouseId = null;
-        }
-        if (newWarehouse != null)
-        {
-            user.WarehouseId = newWarehouse.Id;
-        }
-        db.SaveChanges();
-        result = "Сделано! Пользователь " + user.Login + " изменён.";
-        return result;
-    }*/
-
+    
     public static string EditUser(User oldUser, string newName, string newSurname, string newEmail, string newPhone, string newLogin, Role newRole, Warehouse newWarehouse = null, string newPatronymic = null, string newPassword = null)
     {
-        string result = "Такого пользователя не существует!";
+        string result = "РўР°РєРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         User user = db.Users.FirstOrDefault(d => d.Id == oldUser.Id);
         user.Name = newName;
@@ -452,24 +417,28 @@ public static class DataWorker
         if (newRole != null)
         {
             user.RoleId = newRole.Id;
+            if (newRole.Name == "РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ" && newWarehouse == null)
+            {
+                user.WarehouseId = null;
+            }
         }
         if (newWarehouse != null)
         {
             user.WarehouseId = newWarehouse.Id;
         }
         db.SaveChanges();
-        result = "Сделано! Пользователь " + user.Login + " изменён.";
+        result = "РЎРґРµР»Р°РЅРѕ! РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ " + user.Login + " РёР·РјРµРЅС‘РЅ.";
         return result;
     }
 
     public static string EditRole(Role oldRole, string newName)
     {
-        string result = "Такой роли не существует!";
+        string result = "РўР°РєРѕР№ СЂРѕР»Рё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         Role role = db.Roles.FirstOrDefault(d => d.Id == oldRole.Id);
         role.Name = newName;
         db.SaveChanges();
-        result = "Сделано! Роль " + role.Name + " изменена.";
+        result = "РЎРґРµР»Р°РЅРѕ! Р РѕР»СЊ " + role.Name + " РёР·РјРµРЅРµРЅР°.";
         return result;
     }
 
@@ -479,71 +448,71 @@ public static class DataWorker
 
     public static string DeleteProduct(Product product)
     {
-        string result = "Такого товара не существует!";
+        string result = "РўР°РєРѕРіРѕ С‚РѕРІР°СЂР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Products.Remove(product);
         db.SaveChanges();
-        result = "Сделано! Товар " + product.Name + " удалён!";
+        result = "РЎРґРµР»Р°РЅРѕ! РўРѕРІР°СЂ " + product.Name + " СѓРґР°Р»С‘РЅ!";
         return result;
     }
 
     public static string DeleteCategory(Category category)
     {
-        string result = "Такой категории не существует!";
+        string result = "РўР°РєРѕР№ РєР°С‚РµРіРѕСЂРёРё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Categories.Remove(category);
         db.SaveChanges();
-        result = "Сделано! Категория " + category.Name + " удалена!";
+        result = "РЎРґРµР»Р°РЅРѕ! РљР°С‚РµРіРѕСЂРёСЏ " + category.Name + " СѓРґР°Р»РµРЅР°!";
         return result;
     }
 
     public static string DeleteWarehouse(Warehouse warehouse)
     {
-        string result = "Такого склада не существует!";
+        string result = "РўР°РєРѕРіРѕ СЃРєР»Р°РґР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Warehouses.Remove(warehouse);
         db.SaveChanges();
-        result = "Сделано! Склад " + warehouse.Name + " удалён!";
+        result = "РЎРґРµР»Р°РЅРѕ! РЎРєР»Р°Рґ " + warehouse.Name + " СѓРґР°Р»С‘РЅ!";
         return result;
     }
 
     public static string DeleteSupplier(Supplier supplier)
     {
-        string result = "Такого поставщика не существует!";
+        string result = "РўР°РєРѕРіРѕ РїРѕСЃС‚Р°РІС‰РёРєР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Suppliers.Remove(supplier);
         db.SaveChanges();
-        result = "Сделано! Поставщик " + supplier.Name + " удалён!";
+        result = "РЎРґРµР»Р°РЅРѕ! РџРѕСЃС‚Р°РІС‰РёРє " + supplier.Name + " СѓРґР°Р»С‘РЅ!";
         return result;
     }
 
     public static string DeleteSupply(Supply supply)
     {
-        string result = "Такой поставки не существует!";
+        string result = "РўР°РєРѕР№ РїРѕСЃС‚Р°РІРєРё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Supplies.Remove(supply);
         db.SaveChanges();
-        result = "Сделано! Поставка №" + supply.Id + " удалена!";
+        result = "РЎРґРµР»Р°РЅРѕ! РџРѕСЃС‚Р°РІРєР° в„–" + supply.Id + " СѓРґР°Р»РµРЅР°!";
         return result;
     }
 
     public static string DeleteUser(User user)
     {
-        string result = "Такого пользователя не существует!";
+        string result = "РўР°РєРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Users.Remove(user);
         db.SaveChanges();
-        result = "Сделано! Пользователь " + user.Login + " удалён!";
+        result = "РЎРґРµР»Р°РЅРѕ! РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ " + user.Login + " СѓРґР°Р»С‘РЅ!";
         return result;
     }
 
     public static string DeleteRole(Role role)
     {
-        string result = "Такой роли не существует!";
+        string result = "РўР°РєРѕР№ СЂРѕР»Рё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚!";
         using ApplicationContext db = new();
         db.Roles.Remove(role);
         db.SaveChanges();
-        result = "Сделано! Роль " + role.Name + " удалена!";
+        result = "РЎРґРµР»Р°РЅРѕ! Р РѕР»СЊ " + role.Name + " СѓРґР°Р»РµРЅР°!";
         return result;
     }
 
