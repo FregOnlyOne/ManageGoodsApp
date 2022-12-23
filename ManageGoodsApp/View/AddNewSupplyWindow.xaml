@@ -5,41 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Новая поставка" Height="300" Width="300"
+        Title="Новая поставка" Height="475" Width="850"
         ResizeMode="NoResize" Name="AddNewSupplyWnd">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#FFE1E7FF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Новая поставка"/>
+                <Label FontSize="22" Content="Новая поставка"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Width="200" Orientation="Vertical"
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="FloralWhite"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Товар"/>
+            <TextBlock Text="Товар" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllProducts}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16"
+                      Margin="0 0 0 10"
                       SelectedItem="{Binding SupplyProduct}"/>
-            <TextBlock Text="Количество"/>
-            <TextBox Name="DescriptionProductsBlock" PreviewTextInput="PreviewTextInput"
+            <TextBlock Text="Количество" FontSize="16"/>
+            <TextBox Name="CountBlock" FontSize="16"
+                     Margin="0 0 0 10" PreviewTextInput="PreviewTextInput"
                      Text="{Binding SupplyCount}"/>
-            <TextBlock Text="Поставщик"/>
+            <TextBlock Text="Поставщик" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllSuppliers}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16"
+                      Margin="0 0 0 10"
                       SelectedItem="{Binding SupplySupplier}"/>
-            <TextBlock Text="Склад"/>
+            <TextBlock Text="Склад" FontSize="16"/>
             <ComboBox ItemsSource="{Binding AllWarehouses}"
-                      DisplayMemberPath="Name"
+                      DisplayMemberPath="Name" FontSize="16"
                       SelectedItem="{Binding SupplyWarehouse}"/>
         </StackPanel>
-        <Border Grid.Row="2" Background="#FF6D6D6D">
+        <StackPanel Grid.Row="1" Grid.Column="1" Width="350" Orientation="Vertical"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Дата отправки" FontSize="16"/>
+            <DatePicker FontSize="16" Margin="0 0 0 10"
+                        SelectedDate="{Binding SupplyDepartureDate}"/>
+            <TextBlock Text="Дата поступления" FontSize="16"/>
+            <DatePicker FontSize="16"
+                        SelectedDate="{Binding SupplyArrivalDate}"/>
+            <Separator Height="110" Opacity="0"/>
+        </StackPanel>
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Добавить"
-                        Command="{Binding AddItem}"
+                        Command="{Binding AddItem}" FontSize="18"
                         CommandParameter="{Binding ElementName=AddNewSupplyWnd}"/>
             </StackPanel>
         </Border>

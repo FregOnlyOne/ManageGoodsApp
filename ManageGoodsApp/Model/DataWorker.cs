@@ -1,14 +1,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using ManageGoodsApp.Model;
+using System.Windows.Media.Media3D;
 using ManageGoodsApp.Model.Data;
+using ManageGoodsApp.ViewModel;
 
 namespace ManageGoodsApp.Model;
 
 public static class DataWorker
 {
+    #region AUTH IN SYSTEM
+
+    public static string Authorization(string login, string password)
+    {
+        string result = "Логин или пароль введены неверно или такого пользователя не существует!";
+        
+        string hashedPassword = Validation.CreateHash(password);
+        
+        using ApplicationContext db = new();
+        bool checkIsExist = db.Users.Any(el => el.Login == login && el.Password == hashedPassword);
+        
+        if (checkIsExist)
+        {
+            User user = db.Users.FirstOrDefault(d => d.Login == login);
+            DataManage.AuthUserInitials = user.Surname + " " + user.Name;
+
+            if (user.Patronymic != null)
+            {
+                DataManage.AuthUserInitials += " " + user.Patronymic;
+            }
+            DataManage.AuthUserLogin = user.Login;
+
+            DataManage.AuthUserRoleId = user.RoleId;
+            Role role = db.Roles.FirstOrDefault(d => d.Id == DataManage.AuthUserRoleId);
+
+            DataManage.AuthUserRoleName = role.Name;
+            result = "Авторизован";
+        }
+
+        return result;
+    }
+
+    #endregion
+    
     #region CREATE
 
     public static string CreateProduct(string name, Category category, Warehouse warehouse, string barcode, string weight, int count, double price, int discount = 0)
@@ -16,9 +50,12 @@ public static class DataWorker
         string result = "Уже существует!";
         using ApplicationContext db = new();
         // Check exist
-        bool checkIsExist = db.Products.Any(el => el.Name == name);
+        bool checkIsExist = db.Products.Any(el => el.Name == name && el.WarehouseId == warehouse.Id);
         if (!checkIsExist)
         {
+            double weightInt = Convert.ToDouble(weight) / 1000;
+            weight = Convert.ToString(weightInt) + " кг";
+
             Product newProduct = new()
             {
                 Name = name,
@@ -101,21 +138,21 @@ public static class DataWorker
         return result;
     }
 
-    public static string CreateSupply(Product product, int count, Warehouse warehouse, DateTime? arrivalDate = null)
+    public static string CreateSupply(Product product, int count, Supplier supplier,  Warehouse warehouse, DateTime? departureDate, DateTime? arrivalDate = null)
     {
         string result = "Уже существует!";
         using ApplicationContext db = new();
         // Check exist
-        DateTime currentDate = DateTime.Today;
-        bool checkIsExist = db.Supplies.Any(el => el.ProductId == product.Id && el.WarehouseId == warehouse.Id && el.DepartureDate == currentDate);
+        bool checkIsExist = db.Supplies.Any(el => el.ProductId == product.Id && el.WarehouseId == warehouse.Id && el.DepartureDate == departureDate);
         if (!checkIsExist)
         {
             Supply newSupply = new()
             {
                 ProductId = product.Id,
                 Count = count,
+                SupplierId = supplier.Id,
                 WarehouseId = warehouse.Id,
-                DepartureDate = currentDate,
+                DepartureDate = departureDate,
                 ArrivalDate = arrivalDate
             };
             db.Supplies.Add(newSupply);
@@ -323,14 +360,25 @@ public static class DataWorker
 
     #region UPDATE
 
-    public static string EditProduct(Product oldProduct, string newName, Category newCategory, Warehouse newWarehouse, string newBarcode, string newWeight, int newCount, double newPrice, int newDiscount)
+    public static string EditProduct(Product oldProduct, string newName, string newBarcode, string newWeight, int newCount, double newPrice, int newDiscount, Category newCategory = null, Warehouse newWarehouse = null)
     {
         string result = "Такого товара не существует!";
         using ApplicationContext db = new();
         Product product = db.Products.FirstOrDefault(d => d.Id == oldProduct.Id);
+
+        double weightInt = Convert.ToDouble(newWeight) / 1000;
+        newWeight = Convert.ToString(weightInt) + " кг";
+
         product.Name = newName;
-        product.CategoryId = newCategory.Id;
-        product.WarehouseId = newWarehouse.Id;
+        if (newCategory != null)
+        {
+            product.CategoryId = newCategory.Id;
+        }
+
+        if (newWarehouse != null)
+        {
+            product.WarehouseId = newWarehouse.Id;
+        }
         product.Barcode = newBarcode;
         product.Weight = newWeight;
         product.Count = newCount;
@@ -381,13 +429,14 @@ public static class DataWorker
         return result;
     }
 
-    public static string EditSupply(Supply oldSupply, Product newProduct, int newCount, Warehouse newWarehouse, DateTime? newDepartureDate, DateTime? newArrivalDate = null)
+    public static string EditSupply(Supply oldSupply, Product newProduct, int newCount, Supplier newSupplier, Warehouse newWarehouse, DateTime? newDepartureDate, DateTime? newArrivalDate = null)
     {
         string result = "Такой поставки не существует!";
         using ApplicationContext db = new();
         Supply supply = db.Supplies.FirstOrDefault(d => d.Id == oldSupply.Id);
         supply.ProductId = newProduct.Id;
         supply.Count = newCount;
+        supply.SupplierId = newSupplier.Id;
         supply.WarehouseId = newWarehouse.Id;
         supply.DepartureDate = newDepartureDate;
         supply.ArrivalDate = newArrivalDate;

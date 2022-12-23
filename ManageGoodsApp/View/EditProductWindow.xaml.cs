@@ -1,4 +1,5 @@
-﻿using ManageGoodsApp.ViewModel;
+﻿using System;
+using ManageGoodsApp.ViewModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using ManageGoodsApp.Model;
@@ -17,7 +18,7 @@ namespace ManageGoodsApp.View
             DataManage.SelectedProduct = productToEdit;
             DataManage.ProductName = productToEdit.Name;
             DataManage.ProductBarcode = productToEdit.Barcode;
-            DataManage.ProductWeight = productToEdit.Weight;
+            DataManage.ProductWeight = Convert.ToString(Convert.ToDouble(productToEdit.Weight[..^3]) * 1000);
             DataManage.ProductCount = productToEdit.Count;
             DataManage.ProductPrice = productToEdit.Price;
             DataManage.ProductDiscount = productToEdit.Discount;

@@ -130,13 +130,14 @@ public class DataManage : INotifyPropertyChanged
     public static string SupplierName { get; set; }
     public static string SupplierPhysicalAddress { get; set; }
     public static string SupplierLegalAddress { get; set; }
-    public static string SupplierTabIdentificationNumber { get; set; }
+    public static string SupplierTaxIdentificationNumber { get; set; }
     public static string SupplierPhone { get; set; }
     public static string SupplierEmail { get; set; }
 
     // Supply properties
     public static Product SupplyProduct { get; set; }
     public static int SupplyCount { get; set; }
+    public static Supplier SupplySupplier { get; set; }
     public static Warehouse SupplyWarehouse { get; set; }
     public static DateTime? SupplyDepartureDate { get; set; }
     public static DateTime? SupplyArrivalDate { get; set; }
@@ -159,6 +160,13 @@ public class DataManage : INotifyPropertyChanged
     public static string AuditName { get; set; }
     public static string AuditDescription { get; set; }
     public static User AuditUser { get; set; }
+    
+    // AuthUser properties
+    public static string AuthUserInitials { get; set; }
+    public static string AuthUserLogin { get; set; }
+    public static int AuthUserRoleId { get; set; }
+    public static string AuthUserRoleName { get; set; }
+    public static Role AuthUserRole { get; set; }
 
     // SelectedTabItems properties
     public TabItem SelectedTabItem { get; set; }
@@ -173,8 +181,83 @@ public class DataManage : INotifyPropertyChanged
 
     #endregion
 
-    #region COMMAND TO CREATE
+    #region COMMAND TO AUTH IN APP
 
+    public RelayCommand authorizationItem;
+    public RelayCommand AuthorizationItem
+    {
+        get
+        {
+            return authorizationItem = new RelayCommand(obj =>
+            {
+                Window wnd = obj as Window;
+                string result = "";
+                if (Validation.IsNullString(UserLogin))
+                {
+                    SetRedBlockControl(wnd, "LoginBlock");
+                }
+                else
+                {
+                    SetDefaultBlockControl(wnd, "LoginBlock");
+                }
+                if (Validation.IsNullString(UserPassword))
+                {
+                    SetRedBlockControl(wnd, "PasswordBlock");
+                }
+                else
+                {
+                    SetDefaultBlockControl(wnd, "PasswordBlock");
+                }
+                if (!Validation.IsNullString(UserLogin) &&
+                    !Validation.IsNullString(UserPassword))
+                {
+                    result = DataWorker.Authorization(UserLogin, UserPassword);
+                    if (result == "Авторизован")
+                    {
+                        ShowMessageToUser(result);
+                        SetNullValuesToProperties();
+                        wnd.Hide();
+                        OpenMainWndMethod();
+                    }
+                    else
+                    {
+                        ShowMessageToUser(result);
+                    }
+                }
+            });
+        }
+    }
+
+    public RelayCommand logoutItem;
+    public RelayCommand LogoutItem
+    {
+        get
+        {
+            return logoutItem = new RelayCommand(obj =>
+            {
+                Window wnd = obj as Window;
+                wnd.Hide();
+                OpenAuthWndMethod();
+            });
+        }
+    }
+
+    public RelayCommand forgotPassword;
+    public RelayCommand ForgotPassword
+    {
+        get
+        {
+            return forgotPassword = new RelayCommand(obj =>
+            {
+                string result = "Техподдержка: +7(912)612-73-72\nЧасы приёма с 9:00 до 18:00";
+                ShowMessageToUser(result);
+            });
+        }
+    }
+
+    #endregion
+
+    #region COMMAND TO CREATE
 
     public RelayCommand addItem;
     public RelayCommand AddItem
@@ -220,7 +303,7 @@ public class DataManage : INotifyPropertyChanged
                         {
                             SetDefaultBlockControl(wnd, "WeightBlock");
                         }
-                        if (ProductCount == 0 || ProductCount > 100000)
+                        if (ProductCount < 0 || ProductCount > 100000)
                         {
                             SetRedBlockControl(wnd, "CountBlock");
                         }
@@ -241,6 +324,7 @@ public class DataManage : INotifyPropertyChanged
                             ProductWarehouse != null &&
                             !Validation.IsNullString(ProductBarcode) &&
                             !Validation.IsNullString(ProductWeight) &&
+                            ProductCount >= 0 &&
                             ProductPrice > 0)
                         {
                             result = DataWorker.CreateProduct(ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
@@ -333,13 +417,13 @@ public class DataManage : INotifyPropertyChanged
                         {
                             SetDefaultBlockControl(wnd, "LegalAddressBlock");
                         }
-                        if (Validation.IsNullString(SupplierTabIdentificationNumber))
+                        if (Validation.IsNullString(SupplierTaxIdentificationNumber))
                         {
-                            SetRedBlockControl(wnd, "TabIdentificationNumberBlock");
+                            SetRedBlockControl(wnd, "TaxIdentificationNumberBlock");
                         }
                         else
                         {
-                            SetDefaultBlockControl(wnd, "TabIdentificationNumberBlock");
+                            SetDefaultBlockControl(wnd, "TaxIdentificationNumberBlock");
                         }
                         if (Validation.IsNullString(SupplierPhone))
                         {
@@ -357,18 +441,22 @@ public class DataManage : INotifyPropertyChanged
                         {
                             SetRedBlockControl(wnd, "EmailBlock");
                         }
-                        else
+                        else if (Validation.IsValidEmail(SupplierEmail))
                         {
                             SetDefaultBlockControl(wnd, "EmailBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
                         }
                         if (!Validation.IsNullString(SupplierName) &&
                             !Validation.IsNullString(SupplierPhysicalAddress) &&
                             !Validation.IsNullString(SupplierLegalAddress) &&
-                            !Validation.IsNullString(SupplierTabIdentificationNumber) &&
-                            !Validation.IsNullString(SupplierPhone) &&
-                            !Validation.IsNullString(SupplierEmail))
+                            !Validation.IsNullString(SupplierTaxIdentificationNumber) &&
+                            !Validation.IsNullString(SupplierPhone) && Validation.IsPhoneNumber(SupplierPhone) &&
+                            !Validation.IsNullString(SupplierEmail) && Validation.IsValidEmail(SupplierEmail))
                         {
-                            result = DataWorker.CreateSupplier(SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
+                            result = DataWorker.CreateSupplier(SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTaxIdentificationNumber, SupplierPhone, SupplierEmail);
                             UpdateAllDataView();
                             ShowMessageToUser(result);
                             SetNullValuesToProperties();
@@ -379,7 +467,8 @@ public class DataManage : INotifyPropertyChanged
                     case "AddNewSupplyWnd":
                         if (SupplyProduct == null)
                         {
-                            MessageBox.Show("Укажите товар!");
+                            result = "Укажите товар!";
+                            ShowMessageToUser(result);
                         }
                         if (SupplyCount == 0)
                         {
@@ -389,13 +478,28 @@ public class DataManage : INotifyPropertyChanged
                         {
                             SetDefaultBlockControl(wnd, "CountBlock");
                         }
+                        if (SupplySupplier == null)
+                        {
+                            result = "Укажите поставщика!";
+                            ShowMessageToUser(result);
+                        }
                         if (SupplyWarehouse == null)
                         {
-                            MessageBox.Show("Укажите склад!");
+                            result = "Укажите склад!";
+                            ShowMessageToUser(result);
                         }
-                        else if (SupplyProduct != null && SupplyCount > 0)
+                        if (SupplyDepartureDate == null)
                         {
-                            result = DataWorker.CreateSupply(SupplyProduct, SupplyCount, SupplyWarehouse);
+                            result = "Укажите дату отправки!";
+                            ShowMessageToUser(result);
+                        }
+                        else if (SupplyProduct != null &&
+                                 SupplyCount > 0 &&
+                                 SupplySupplier != null &&
+                                 SupplyWarehouse != null &&
+                                 SupplyDepartureDate != null)
+                        {
+                            result = DataWorker.CreateSupply(SupplyProduct, SupplyCount, SupplySupplier, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
                             UpdateAllDataView();
                             ShowMessageToUser(result);
                             SetNullValuesToProperties();
@@ -520,21 +624,75 @@ public class DataManage : INotifyPropertyChanged
                 switch (wnd.Name)
                 {
                     case "EditProductWnd":
-                        result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
+                        if (Validation.IsNullString(ProductName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(ProductBarcode))
+                        {
+                            SetRedBlockControl(wnd, "BarcodeBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "BarcodeBlock");
+                        }
+                        if (Validation.IsNullString(ProductWeight))
+                        {
+                            SetRedBlockControl(wnd, "WeightBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "WeightBlock");
+                        }
+                        if (ProductCount < 0 || ProductCount > 100000)
+                        {
+                            SetRedBlockControl(wnd, "CountBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "CountBlock");
+                        }
+                        if (ProductPrice == 0 || ProductPrice > 100000000)
+                        {
+                            SetRedBlockControl(wnd, "PriceBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "PriceBlock");
+                        }
+                        if (!Validation.IsNullString(ProductName) &&
+                            !Validation.IsNullString(ProductBarcode) &&
+                            !Validation.IsNullString(ProductWeight) &&
+                            ProductCount >= 0 &&
+                            ProductPrice > 0)
+                        {
+                            result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount, ProductCategory, ProductWarehouse);
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(result);
+                            wnd.Close();
+                        }
                         break;
-                    
+
                     case "EditCategoryWnd":
-                        result = DataWorker.EditCategory(SelectedCategory, CategoryName);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
+                        if (Validation.IsNullString(CategoryName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            result = DataWorker.EditCategory(SelectedCategory, CategoryName);
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(result);
+                            wnd.Close();
+                        }
                         break;
-                    
+
                     case "EditWarehouseWnd":
                         if (Validation.IsNullString(WarehouseName))
                         {
@@ -578,21 +736,120 @@ public class DataManage : INotifyPropertyChanged
                         break;
                     
                     case "EditSupplierWnd":
-                        result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
+                        if (Validation.IsNullString(SupplierName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(SupplierPhysicalAddress))
+                        {
+                            SetRedBlockControl(wnd, "PhysicalAddressBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "PhysicalAddressBlock");
+                        }
+                        if (Validation.IsNullString(SupplierLegalAddress))
+                        {
+                            SetRedBlockControl(wnd, "LegalAddressBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "LegalAddressBlock");
+                        }
+                        if (Validation.IsNullString(SupplierTaxIdentificationNumber))
+                        {
+                            SetRedBlockControl(wnd, "TaxIdentificationNumberBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "TaxIdentificationNumberBlock");
+                        }
+                        if (Validation.IsNullString(SupplierPhone))
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        else if (Validation.IsPhoneNumber(SupplierPhone))
+                        {
+                            SetDefaultBlockControl(wnd, "PhoneBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        if (Validation.IsNullString(SupplierEmail))
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
+                        }
+                        else if (Validation.IsValidEmail(SupplierEmail))
+                        {
+                            SetDefaultBlockControl(wnd, "EmailBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
+                        }
+                        if (!Validation.IsNullString(SupplierName) &&
+                            !Validation.IsNullString(SupplierPhysicalAddress) &&
+                            !Validation.IsNullString(SupplierLegalAddress) &&
+                            !Validation.IsNullString(SupplierTaxIdentificationNumber) &&
+                            !Validation.IsNullString(SupplierPhone) && Validation.IsPhoneNumber(SupplierPhone) &&
+                            !Validation.IsNullString(SupplierEmail) && Validation.IsValidEmail(SupplierEmail))
+                        {
+                            result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTaxIdentificationNumber, SupplierPhone, SupplierEmail);
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(result);
+                            wnd.Close();
+                        }
                         break;
-                    
+
                     case "EditSupplyWnd":
-                        result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(result);
-                        wnd.Close();
+                        if (SupplyProduct == null)
+                        {
+                            result = "Укажите товар!";
+                            ShowMessageToUser(result);
+                        }
+                        if (SupplyCount == 0)
+                        {
+                            SetRedBlockControl(wnd, "CountBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "CountBlock");
+                        }
+                        if (SupplySupplier == null)
+                        {
+                            result = "Укажите поставщика!";
+                            ShowMessageToUser(result);
+                        }
+                        if (SupplyWarehouse == null)
+                        {
+                            result = "Укажите склад!";
+                            ShowMessageToUser(result);
+                        }
+                        if (SupplyDepartureDate == null)
+                        {
+                            result = "Укажите дату отправки!";
+                            ShowMessageToUser(result);
+                        }
+                        else if (SupplyProduct != null &&
+                                 SupplyCount > 0 &&
+                                 SupplySupplier != null &&
+                                 SupplyWarehouse != null &&
+                                 SupplyDepartureDate != null)
+                        {
+                            result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplySupplier, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(result);
+                            wnd.Close();
+                        }
                         break;
-                    
+
                     case "EditUserWnd":
                         if (Validation.IsNullString(UserName))
                         {
@@ -744,7 +1001,7 @@ public class DataManage : INotifyPropertyChanged
     #endregion
 
     #region COMMANDS TO OPEN WINDOWS
-
+    
     private RelayCommand openAddNewProductWnd;
     public RelayCommand OpenAddNewProductWnd
     {
@@ -946,6 +1203,18 @@ public class DataManage : INotifyPropertyChanged
 
     #region METHODS TO OPEN WINDOWS
 
+    private void OpenMainWndMethod()
+    {
+        MainWindow window = new();
+        SetCenterPositionAndOpen(window);
+    }
+
+    private void OpenAuthWndMethod()
+    {
+        AuthWindow window = new();
+        SetCenterPositionAndOpen(window);
+    }
+    
     #region OPEN ADD WINDOWS METHODS
 
     private void OpenAddProductWindowsMethod()
@@ -1085,7 +1354,7 @@ public class DataManage : INotifyPropertyChanged
         SupplierName = null;
         SupplierPhysicalAddress = null;
         SupplierLegalAddress = null;
-        SupplierTabIdentificationNumber = null;
+        SupplierTaxIdentificationNumber = null;
         SupplierPhone = null;
         SupplierEmail = null;
 

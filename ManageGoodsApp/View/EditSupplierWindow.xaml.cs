@@ -18,6 +18,7 @@ namespace ManageGoodsApp.View
             DataManage.SupplierName = supplierToEdit.Name;
             DataManage.SupplierPhysicalAddress = supplierToEdit.PhysicalAddress;
             DataManage.SupplierLegalAddress = supplierToEdit.LegalAddress;
+            DataManage.SupplierTaxIdentificationNumber = supplierToEdit.TaxIdentificationNumber;
             DataManage.SupplierEmail = supplierToEdit.Email;
             DataManage.SupplierPhone = supplierToEdit.Phone;
         }
@@ -26,6 +27,11 @@ namespace ManageGoodsApp.View
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+        
+        private void PreviewPhoneTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9^(^)^+^-]+");
         }
     }
 }

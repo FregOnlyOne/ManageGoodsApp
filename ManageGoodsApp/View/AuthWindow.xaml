@@ -5,34 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Авторизация" Height="250" Width="300"
+        WindowStartupLocation="CenterScreen"
+        Title="Авторизация" Height="350" Width="500"
         ResizeMode="NoResize" Name="AuthWnd">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Авторизуйтесь в системе"/>
+                <Label FontSize="18" Content="Авторизуйтесь в системе"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Width="200" Orientation="Vertical"
-                    HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Логин"/>
-            <TextBox Text="{Binding UserName}"/>
-            <TextBlock Text="Пароль"/>
-            <PasswordBox TextInput="{Binding UserLogin}"/>
-            <CheckBox Content="Показать пароль" Margin="0 5 0 0"/>
-            <Button Content="Забыли пароль?" Margin="0 5 0 0"
-                    Background="White" BorderThickness="0"
-                    Command="{Binding ForgotPassword}"/>
-        </StackPanel>
+        <Border Grid.Row="1" Background="FloralWhite">
+            <StackPanel Width="350" Orientation="Vertical"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Логин" FontSize="16"/>
+                <TextBox Name="LoginBlock" FontSize="16"
+                         Margin="0 0 0 10"
+                         Text="{Binding UserLogin}"/>
+                <TextBlock Text="Пароль" FontSize="16"/>
+                <PasswordBox Name="PasswordBlock" FontSize="16"
+                             Margin="0 0 0 10"
+                             PasswordChanged="PasswordBox_PasswordChanged"/>
+                <CheckBox Content="Показать пароль" Margin="0 5 0 10" FontSize="14"/>
+                <Button Content="Забыли пароль?" Margin="0 5 0 0"
+                        FontSize="14" Width="120"
+                        Background="FloralWhite" BorderThickness="0"
+                        Command="{Binding ForgotPassword}"
+                        CommandParameter="{Binding ElementName=AuthWnd}"/>
+            </StackPanel>
+        </Border>
         <Border Grid.Row="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Войти"
-                        Command="{Binding AddItem}"
+                        Command="{Binding AuthorizationItem}" FontSize="16"
                         CommandParameter="{Binding ElementName=AuthWnd}"/>
             </StackPanel>
         </Border>

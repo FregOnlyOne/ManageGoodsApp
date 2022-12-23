@@ -17,8 +17,7 @@
         <Border Grid.Row="1" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Удалить" Height="18" Padding="20 0"
-                        Command="{Binding AddItem}"
-                        CommandParameter="{Binding ElementName=AddNewCategoryWnd}"/>
+                        Command="{Binding ConfirmDeletion}"/>
                 <Separator Width="25" Opacity="0"></Separator>
                 <Button Content="Отмена" Height="18" Padding="20 0" 
                         Click="Button_Click"/>

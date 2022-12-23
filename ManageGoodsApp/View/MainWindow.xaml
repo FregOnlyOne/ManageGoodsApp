@@ -5,19 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Главное окно" Height="650" Width="1200">
+        Title="Главное окно" Height="650" Width="1200" Name="MainWnd">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="NavajoWhite">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="28" Content="Управление товарами" FontFamily="Candara Light"/>
-            </StackPanel>
-        </Border>
-        <Border Grid.Row="1" Padding="50 20" Background="FloralWhite">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="NavajoWhite"></Border>
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label FontSize="16" FontWeight="SemiBold"
+                   Padding="7 3" Margin="10 0 0 0"
+                   Background="FloralWhite" Foreground="#FF6D6D6D"
+                   BorderBrush="#FF6D6D6D" BorderThickness="2"
+                   Content="{Binding AuthUserRoleName}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label FontSize="28" Content="Управление товарами" FontFamily="Candara Light"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Label FontSize="16" FontWeight="SemiBold"
+                   Padding="7 3" Margin="0 0 10 0"
+                   Background="FloralWhite" Foreground="#FF6D6D6D"
+                   BorderBrush="#FF6D6D6D" BorderThickness="2"
+                   Content="{Binding AuthUserInitials}"/>
+        </StackPanel>
+        <Border Grid.Row="1" Grid.ColumnSpan="3" Padding="50 20" Background="FloralWhite">
             <TabControl FontSize="16" SelectedItem="{Binding SelectedTabItem}">
                 <TabItem Name="ProductsTabItem" FontSize="18">
                     <TabItem.Header>
@@ -263,20 +281,29 @@
                 </TabItem>
             </TabControl>
         </Border>
-        <Border Grid.Row="2" Background="#FF6D6D6D">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Padding="10 0" Height="35" Content="Новый товар"
-                        FontSize="18"
-                        Command="{Binding OpenAddNewProductWnd}"/>
-                <Separator Opacity="0" Width="20"></Separator>
-                <Button Padding="10 0" Height="35" Content="Новая поставка"
-                        FontSize="18"
-                        Command="{Binding OpenAddNewSupplyWnd}"/>
-                <Separator Opacity="0" Width="20"></Separator>
-                <Button Padding="10 0" Height="35" Content="Новый пользователь"
-                        FontSize="18"
-                        Command="{Binding OpenAddNewUserWnd}"/>
-            </StackPanel>
-        </Border>
+        <Border Grid.Row="2" Grid.ColumnSpan="3" Background="#FF6D6D6D"></Border>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3"
+                    Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Padding="10 0" Height="35" Content="Новый товар"
+                    FontSize="18"
+                    Command="{Binding OpenAddNewProductWnd}"/>
+            <Separator Opacity="0" Width="20"></Separator>
+            <Button Padding="10 0" Height="35" Content="Новая поставка"
+                    FontSize="18"
+                    Command="{Binding OpenAddNewSupplyWnd}"/>
+            <Separator Opacity="0" Width="20"></Separator>
+            <Button Padding="10 0" Height="35" Content="Новый пользователь"
+                    FontSize="18"
+                    Command="{Binding OpenAddNewUserWnd}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2"
+                    VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Button FontSize="18" Height="35"
+                    Padding="10 0" Margin="0 0 20 0"
+                    Content="Выйти"
+                    Command="{Binding LogoutItem}"
+                    CommandParameter="{Binding ElementName=MainWnd}"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

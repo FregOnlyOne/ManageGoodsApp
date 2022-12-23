@@ -5,54 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ManageGoodsApp.View"
         mc:Ignorable="d"
-        Title="Редактирование поставщика"  Height="300" Width="500"
+        Title="Редактирование поставщика" Height="475" Width="850"
         ResizeMode="NoResize" Name="EditSupplierWnd">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FFE1E7FF">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="NavajoWhite">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Редактирование поставщика"/>
+                <Label FontSize="22" Content="Редактирование поставщика"/>
             </StackPanel>
         </Border>
-        <StackPanel Grid.Row="1" Grid.Column="0"  Width="200" Orientation="Vertical"
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="FloralWhite"/>
+        <StackPanel Grid.Row="1" Grid.Column="0"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Название"/>
-            <TextBox Style="{StaticResource PlaceholderTextBoxStyle}" Tag="ООО Рога и копыта"
+            <TextBlock Text="Название" FontSize="16"/>
+            <TextBox Name="NameBlock" FontSize="16"
+                     Margin="0 0 0 10"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag='ООО "Рога и копыта"'
                      Text="{Binding SupplierName}"/>
-            <TextBlock Text="Физический адрес"/>
-            <TextBox Style="{StaticResource PlaceholderTextBoxStyle}" Tag="г. Орск, ул. Ленина, д. 21"
+            <TextBlock Text="Физический адрес" FontSize="16"/>
+            <TextBox Name="PhysicalAddressBlock" FontSize="16"
+                     Margin="0 0 0 10"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="г. Орск, ул. Ленина, д. 21"
                      Text="{Binding SupplierPhysicalAddress}"/>
-            <TextBlock Text="Юридический адрес"/>
-            <TextBox Style="{StaticResource PlaceholderTextBoxStyle}" Tag="г. Орск, ул. Ленина, д. 21"
+            <TextBlock Text="Юридический адрес" FontSize="16"/>
+            <TextBox Name="LegalAddressBlock" FontSize="16"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="г. Орск, ул. Ленина, д. 21"
                      Text="{Binding SupplierLegalAddress}"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1"  Width="200" Orientation="Vertical"
+        <StackPanel Grid.Row="1" Grid.Column="1"  Width="350" Orientation="Vertical"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="ИНН"/>
-            <TextBox PreviewTextInput="PreviewTextInput"
-                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Код"
+            <TextBlock Text="ИНН" FontSize="16"/>
+            <TextBox Name="TaxIdentificationNumberBlock" FontSize="16"
+                     Margin="0 0 0 10" PreviewTextInput="PreviewTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="1089100040567"
                      Text="{Binding SupplierTaxIdentificationNumber}"/>
-            <TextBlock Text="Почта"/>
-            <TextBox PreviewTextInput="PreviewTextInput"
-                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="email@mail.ru"
+            <TextBlock Text="Электронная почта" FontSize="16"/>
+            <TextBox Name="EmailBlock" FontSize="16"
+                     Margin="0 0 0 10"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="ivanpetrov@mail.ru"
                      Text="{Binding SupplierEmail}"/>
-            <TextBlock Text="Телефон"/>
-            <TextBox PreviewTextInput="PreviewTextInput"
-                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="79010010101"
+            <TextBlock Text="Телефон" FontSize="16"/>
+            <TextBox Name="PhoneBlock" FontSize="16"
+                     PreviewTextInput="PreviewPhoneTextInput"
+                     Style="{StaticResource PlaceholderTextBoxStyle}" Tag="8(901)-001-01-01"
                      Text="{Binding SupplierPhone}"/>
         </StackPanel>
         <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#FF6D6D6D">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Padding="20 0" Height="35" Content="Изменить"
-                        Command="{Binding EditItem}"
+                        Command="{Binding EditItem}" FontSize="18"
                         CommandParameter="{Binding ElementName=EditSupplierWnd}"/>
             </StackPanel>
         </Border>

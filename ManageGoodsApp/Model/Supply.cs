@@ -25,11 +25,11 @@ public class Supply
         {
             if (ArrivalDate > DateTime.Today || ArrivalDate == null)
             {
-                return "В пути";
+                return "Р’ РїСѓС‚Рё";
             }
             else
             {
-                return "Доставлено";
+                return "Р”РѕСЃС‚Р°РІР»РµРЅРѕ";
             }
         }
     }

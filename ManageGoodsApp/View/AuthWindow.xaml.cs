@@ -1,5 +1,6 @@
 ﻿using ManageGoodsApp.ViewModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ManageGoodsApp.View
 {
@@ -12,6 +13,12 @@ namespace ManageGoodsApp.View
         {
             InitializeComponent();
             DataContext = new DataManage();
+        }
+        
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            { DataManage.UserPassword = ((PasswordBox)sender).Password; }
         }
     }
 }
