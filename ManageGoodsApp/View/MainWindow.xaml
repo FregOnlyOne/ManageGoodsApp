@@ -166,7 +166,7 @@
                         <TextBlock Text="Поставки"/>
                     </TabItem.Header>
                     <TabItem.ContextMenu>
-                        <ContextMenu>
+                        <ContextMenu Name="SuppliesContextMenu">
                             <MenuItem Header="Добавить" Command="{Binding OpenAddItem}" FontSize="14"/>
                             <MenuItem Header="Редактировать" Command="{Binding OpenEditItem}" FontSize="14"/>
                             <MenuItem Header="Удалить" Command="{Binding DeleteItem}" FontSize="14"/>
@@ -254,7 +254,7 @@
                         </ListView.View>
                     </ListView>
                 </TabItem>
-                <TabItem Name="AuditTabItem" FontSize="18" Visibility="Hidden">
+                <TabItem Name="AuditTabItem" FontSize="18" Visibility="Collapsed">
                     <TabItem.Header>
                         <TextBlock Text="Аудит"/>
                     </TabItem.Header>
@@ -287,12 +287,12 @@
             <Button Padding="10 0" Height="35" Content="Новый товар"
                     FontSize="18"
                     Command="{Binding OpenAddNewProductWnd}"/>
-            <Separator Opacity="0" Width="20"></Separator>
-            <Button Padding="10 0" Height="35" Content="Новая поставка"
+            <Separator Name="NewProductBtnSeparator" Opacity="0" Width="20"></Separator>
+            <Button Name="NewSupplyBtn" Padding="10 0" Height="35" Content="Новая поставка"
                     FontSize="18"
                     Command="{Binding OpenAddNewSupplyWnd}"/>
-            <Separator Opacity="0" Width="20"></Separator>
-            <Button Padding="10 0" Height="35" Content="Новый пользователь"
+            <Separator Name="NewSupplyBtnSeparator" Opacity="0" Width="20"></Separator>
+            <Button Name="NewUserBtn" Padding="10 0" Height="35" Content="Новый пользователь"
                     FontSize="18"
                     Command="{Binding OpenAddNewUserWnd}"/>
         </StackPanel>

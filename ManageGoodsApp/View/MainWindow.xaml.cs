@@ -17,7 +17,7 @@ namespace ManageGoodsApp.View
         public static ListView AllUsersView;
         public static ListView AllRolesView;
         public static ListView AllLogsView;
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +30,27 @@ namespace ManageGoodsApp.View
             AllUsersView = ViewAllUsers;
             AllRolesView = ViewAllRoles;
             AllLogsView = ViewAllLogs;
+
+            if (DataManage.AuthUserRoleName == "Кладовщик")
+            {
+                CategoriesTabItem.Visibility = Visibility.Collapsed;
+                WarehousesTabItem.Visibility = Visibility.Collapsed;
+                SuppliersTabItem.Visibility = Visibility.Collapsed;
+                SuppliesContextMenu.Visibility = Visibility.Collapsed;
+                UsersTabItem.Visibility = Visibility.Collapsed;
+                RolesTabItem.Visibility = Visibility.Collapsed;
+                NewProductBtnSeparator.Visibility = Visibility.Collapsed;
+                NewSupplyBtn.Visibility = Visibility.Collapsed;
+                NewSupplyBtnSeparator.Visibility = Visibility.Collapsed;
+                NewUserBtn.Visibility = Visibility.Collapsed;
+            }
+            else if (DataManage.AuthUserRoleName == "Менеджер")
+            {
+                UsersTabItem.Visibility = Visibility.Collapsed;
+                RolesTabItem.Visibility = Visibility.Collapsed;
+                NewUserBtn.Visibility = Visibility.Collapsed;
+                NewSupplyBtnSeparator.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
