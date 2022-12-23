@@ -515,137 +515,152 @@ public class DataManage : INotifyPropertyChanged
         {
             return editItem = new RelayCommand(obj =>
             {
+                string result = "";
                 Window wnd = obj as Window;
-                if (wnd.Name == "EditProductWnd")
+                switch (wnd.Name)
                 {
-                    string result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
-                    UpdateAllDataView();
-                    SetNullValuesToProperties();
-                    ShowMessageToUser(result);
-                    wnd.Close();
-                }
-                if (wnd.Name == "EditCategoryWnd")
-                {
-                    string result = DataWorker.EditCategory(SelectedCategory, CategoryName);
-                    UpdateAllDataView();
-                    SetNullValuesToProperties();
-                    ShowMessageToUser(result);
-                    wnd.Close();
-                }
-                if (wnd.Name == "EditWarehouseWnd")
-                {
-                    if (Validation.IsNullString(WarehouseName))
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    else
-                    {
-                        SetDefaultBlockControl(wnd, "NameBlock");
-                    }
-                    if (Validation.IsNullString(WarehouseAddress))
-                    {
-                        SetRedBlockControl(wnd, "AddressBlock");
-                    }
-                    else
-                    {
-                        SetDefaultBlockControl(wnd, "AddressBlock");
-                    }
-                    if (Validation.IsNullString(WarehousePhone))
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    else if (Validation.IsPhoneNumber(WarehousePhone))
-                    {
-                        SetDefaultBlockControl(wnd, "PhoneBlock");
-                    }
-                    else
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    if (!Validation.IsNullString(WarehouseName) &&
-                        !Validation.IsNullString(WarehouseAddress) &&
-                        !Validation.IsNullString(WarehousePhone) &&
-                        Validation.IsPhoneNumber(WarehousePhone))
-                    {
-                        string result = DataWorker.EditWarehouse(SelectedWarehouse, WarehouseName, WarehouseAddress, WarehousePhone);
+                    case "EditProductWnd":
+                        result = DataWorker.EditProduct(SelectedProduct, ProductName, ProductCategory, ProductWarehouse, ProductBarcode, ProductWeight, ProductCount, ProductPrice, ProductDiscount);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
                         wnd.Close();
-                    }
-                }
-                if (wnd.Name == "EditSupplierWnd")
-                {
-                    string result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
-                    UpdateAllDataView();
-                    SetNullValuesToProperties();
-                    ShowMessageToUser(result);
-                    wnd.Close();
-                }
-                if (wnd.Name == "EditSupplyWnd")
-                {
-                    string result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
-                    UpdateAllDataView();
-                    SetNullValuesToProperties();
-                    ShowMessageToUser(result);
-                    wnd.Close();
-                }
-                if (wnd.Name == "EditUserWnd")
-                {
-                    if (Validation.IsNullString(UserName))
-                    {
-                        SetRedBlockControl(wnd, "NameBlock");
-                    }
-                    else
-                    {
-                        SetDefaultBlockControl(wnd, "NameBlock");
-                    }
-                    if (Validation.IsNullString(UserSurname))
-                    {
-                        SetRedBlockControl(wnd, "SurnameBlock");
-                    }
-                    else
-                    {
-                        SetDefaultBlockControl(wnd, "SurnameBlock");
-                    }
-                    if (Validation.IsNullString(UserEmail))
-                    {
-                        SetRedBlockControl(wnd, "EmailBlock");
-                    }
-                    else if (Validation.IsValidEmail(UserEmail))
-                    {
-                        SetDefaultBlockControl(wnd, "EmailBlock");
-                    }
-                    else
-                    {
-                        SetRedBlockControl(wnd, "EmailBlock");
-                    }
-                    if (Validation.IsNullString(UserPhone))
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    else if (Validation.IsPhoneNumber(UserPhone))
-                    {
-                        SetDefaultBlockControl(wnd, "PhoneBlock");
-                    }
-                    else
-                    {
-                        SetRedBlockControl(wnd, "PhoneBlock");
-                    }
-                    if (Validation.IsNullString(UserLogin))
-                    {
-                        SetRedBlockControl(wnd, "LoginBlock");
-                    }
-                    else
-                    {
-                        SetDefaultBlockControl(wnd, "LoginBlock");
-                    }
-                    if (UserRole != null)
-                    {
-                        if (UserRole.Name != "Администратор" && UserWarehouse == null)
+                        break;
+                    
+                    case "EditCategoryWnd":
+                        result = DataWorker.EditCategory(SelectedCategory, CategoryName);
+                        UpdateAllDataView();
+                        SetNullValuesToProperties();
+                        ShowMessageToUser(result);
+                        wnd.Close();
+                        break;
+                    
+                    case "EditWarehouseWnd":
+                        if (Validation.IsNullString(WarehouseName))
                         {
-                            string result = "Укажите склад!";
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(WarehouseAddress))
+                        {
+                            SetRedBlockControl(wnd, "AddressBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "AddressBlock");
+                        }
+                        if (Validation.IsNullString(WarehousePhone))
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        else if (Validation.IsPhoneNumber(WarehousePhone))
+                        {
+                            SetDefaultBlockControl(wnd, "PhoneBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        if (!Validation.IsNullString(WarehouseName) &&
+                            !Validation.IsNullString(WarehouseAddress) &&
+                            !Validation.IsNullString(WarehousePhone) &&
+                            Validation.IsPhoneNumber(WarehousePhone))
+                        {
+                            result = DataWorker.EditWarehouse(SelectedWarehouse, WarehouseName, WarehouseAddress, WarehousePhone);
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
                             ShowMessageToUser(result);
+                            wnd.Close();
+                        }
+                        break;
+                    
+                    case "EditSupplierWnd":
+                        result = DataWorker.EditSupplier(SelectedSupplier, SupplierName, SupplierPhysicalAddress, SupplierLegalAddress, SupplierTabIdentificationNumber, SupplierPhone, SupplierEmail);
+                        UpdateAllDataView();
+                        SetNullValuesToProperties();
+                        ShowMessageToUser(result);
+                        wnd.Close();
+                        break;
+                    
+                    case "EditSupplyWnd":
+                        result = DataWorker.EditSupply(SelectedSupply, SupplyProduct, SupplyCount, SupplyWarehouse, SupplyDepartureDate, SupplyArrivalDate);
+                        UpdateAllDataView();
+                        SetNullValuesToProperties();
+                        ShowMessageToUser(result);
+                        wnd.Close();
+                        break;
+                    
+                    case "EditUserWnd":
+                        if (Validation.IsNullString(UserName))
+                        {
+                            SetRedBlockControl(wnd, "NameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "NameBlock");
+                        }
+                        if (Validation.IsNullString(UserSurname))
+                        {
+                            SetRedBlockControl(wnd, "SurnameBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "SurnameBlock");
+                        }
+                        if (Validation.IsNullString(UserEmail))
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
+                        }
+                        else if (Validation.IsValidEmail(UserEmail))
+                        {
+                            SetDefaultBlockControl(wnd, "EmailBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "EmailBlock");
+                        }
+                        if (Validation.IsNullString(UserPhone))
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        else if (Validation.IsPhoneNumber(UserPhone))
+                        {
+                            SetDefaultBlockControl(wnd, "PhoneBlock");
+                        }
+                        else
+                        {
+                            SetRedBlockControl(wnd, "PhoneBlock");
+                        }
+                        if (Validation.IsNullString(UserLogin))
+                        {
+                            SetRedBlockControl(wnd, "LoginBlock");
+                        }
+                        else
+                        {
+                            SetDefaultBlockControl(wnd, "LoginBlock");
+                        }
+                        if (UserRole != null)
+                        {
+                            if (UserRole.Name != "Администратор" && UserWarehouse == null)
+                            {
+                                result = "Укажите склад!";
+                                ShowMessageToUser(result);
+                            }
+                            else if (!Validation.IsNullString(UserName) &&
+                                     !Validation.IsNullString(UserSurname) &&
+                                     !Validation.IsNullString(UserEmail) && Validation.IsValidEmail(UserEmail) &&
+                                     !Validation.IsNullString(UserPhone) && Validation.IsPhoneNumber(UserPhone) &&
+                                     !Validation.IsNullString(UserLogin))
+                            {
+                                result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
+                                UpdateAllDataView();
+                                SetNullValuesToProperties();
+                                ShowMessageToUser(result);
+                                wnd.Close();
+                            }
                         }
                         else if (!Validation.IsNullString(UserName) &&
                                  !Validation.IsNullString(UserSurname) &&
@@ -653,33 +668,21 @@ public class DataManage : INotifyPropertyChanged
                                  !Validation.IsNullString(UserPhone) && Validation.IsPhoneNumber(UserPhone) &&
                                  !Validation.IsNullString(UserLogin))
                         {
-                            string result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
+                            result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
                             UpdateAllDataView();
                             SetNullValuesToProperties();
                             ShowMessageToUser(result);
                             wnd.Close();
                         }
-                    }
-                    else if (!Validation.IsNullString(UserName) &&
-                             !Validation.IsNullString(UserSurname) &&
-                             !Validation.IsNullString(UserEmail) && Validation.IsValidEmail(UserEmail) &&
-                             !Validation.IsNullString(UserPhone) && Validation.IsPhoneNumber(UserPhone) &&
-                             !Validation.IsNullString(UserLogin))
-                    {
-                        string result = DataWorker.EditUser(SelectedUser, UserName, UserSurname, UserEmail, UserPhone, UserLogin, UserRole, UserWarehouse, UserPatronymic, UserPassword);
+                        break;
+                    
+                    case "EditRoleWnd":
+                        result = DataWorker.EditRole(SelectedRole, RoleName);
                         UpdateAllDataView();
                         SetNullValuesToProperties();
                         ShowMessageToUser(result);
                         wnd.Close();
-                    }
-                }
-                if (wnd.Name == "EditRoleWnd")
-                {
-                    string result = DataWorker.EditRole(SelectedRole, RoleName);
-                    UpdateAllDataView();
-                    SetNullValuesToProperties();
-                    ShowMessageToUser(result);
-                    wnd.Close();
+                        break;
                 }
             });
         }

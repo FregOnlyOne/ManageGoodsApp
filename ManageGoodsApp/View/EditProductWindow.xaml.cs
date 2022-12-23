@@ -16,6 +16,8 @@ namespace ManageGoodsApp.View
             DataContext = new DataManage();
             DataManage.SelectedProduct = productToEdit;
             DataManage.ProductName = productToEdit.Name;
+            DataManage.ProductBarcode = productToEdit.Barcode;
+            DataManage.ProductWeight = productToEdit.Weight;
             DataManage.ProductCount = productToEdit.Count;
             DataManage.ProductPrice = productToEdit.Price;
             DataManage.ProductDiscount = productToEdit.Discount;
